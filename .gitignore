@@ -1,0 +1,4 @@
+sandbox/
+database/vagrant/**/.vagrant
+test/vagrant/**/.vagrant
+web/vagrant/**/.vagrant
