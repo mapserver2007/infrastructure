@@ -1,8 +1,8 @@
+- name: copy docker file
+  copy: "src=Dockerfile dest=/home/vagrant/"
+- name: copy ansible files
+  copy: "src=ansible dest=/home/vagrant/"
 - name: install docker
   yum: name=docker state=latest
   sudo: yes
   notify: start docker
-- name: copy authorized_keys
-  copy: "src=authorized_keys dest=/home/vagrant/"
-- name: copy Dockerfile
-  copy: "src=Dockerfile dest=/home/vagrant/"
