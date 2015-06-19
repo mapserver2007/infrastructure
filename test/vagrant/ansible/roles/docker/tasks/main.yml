@@ -1,0 +1,8 @@
+- name: install docker
+  yum: name=docker state=latest
+  sudo: yes
+  notify: start docker
+- name: copy authorized_keys
+  copy: "src=authorized_keys dest=/home/vagrant/"
+- name: copy Dockerfile
+  copy: "src=Dockerfile dest=/home/vagrant/"
