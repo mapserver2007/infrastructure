@@ -1,7 +1,5 @@
 - name: copy docker file
   copy: "src=Dockerfile dest=/home/vagrant/"
-- name: copy ansible files
-  copy: "src=ansible dest=/home/vagrant/"
 - name: copy supervisor files
   copy: "src=supervisord.conf dest=/home/vagrant/"
 - name: install docker
