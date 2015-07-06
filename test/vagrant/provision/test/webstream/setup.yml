@@ -1,0 +1,6 @@
+---
+- hosts: test.webstream
+  user: root
+  roles:
+    - common
+    - apache

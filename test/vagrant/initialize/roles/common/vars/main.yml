@@ -1,0 +1,8 @@
+---
+docker:
+  test:
+    image_name: docker/ansible
+    container_name: test1
+  web:
+    image_name: docker/ansible
+    container_name: web1
