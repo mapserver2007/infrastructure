@@ -1,0 +1,10 @@
+---
+- hosts: test
+  sudo: yes
+  user: vagrant
+  roles:
+    - common
+    - data-container
+    - database-container
+    # - httpd-only-container
+#    - webstream-container

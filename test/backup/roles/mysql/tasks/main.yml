@@ -1,0 +1,3 @@
+- name: backup mysql directory
+  shell: docker run --volumes-from data_mysql -v /vagrant:/backup docker/data tar cvf /backup/mysql_$(date '+%Y%m%d%T' | tr -d :).tar /mnt/docker/mysql
+  sudo: yes

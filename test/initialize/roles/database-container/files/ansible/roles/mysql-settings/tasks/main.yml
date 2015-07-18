@@ -1,0 +1,10 @@
+- name: add timezone info
+  shell: /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
+- name: create timezone sql file
+  shell: /usr/bin/echo 'SET @@SESSION.time_zone = "Asia/Tokyo";' > setup-timezone.sql
+- name: set JST timezone
+  shell: "/usr/bin/mysql -u root mysql < setup-timezone.sql"
+- name: create user
+  mysql_user: "name={{ mysql_userid }} password={{ mysql_passwd }} host={{ item }} priv={{ db_name }}.*:ALL,GRANT state=present"
+  with_items:
+    - localhost

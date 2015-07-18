@@ -1,0 +1,14 @@
+---
+docker:
+  data:
+    label: data-container
+  database:
+    label: database-container
+  httpd:
+    label: httpd-only-container
+    image_name: docker/httpd
+    container_name: apache
+  webstream:
+    label: webstream-container
+    image_name: docker/webstream
+    container_name: webstream-0.4

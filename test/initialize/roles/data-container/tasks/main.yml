@@ -1,0 +1,8 @@
+- name: copy docker file
+  copy: "src=Dockerfile dest=/home/vagrant/{{ docker.data.label }}/"
+- name: docker build
+  shell: sudo docker build -t docker/data data-container
+  sudo: yes
+- name: docker run (for mysql)
+  shell: docker run -itd -v /mnt/docker/mysql --name data_mysql docker/data
+  sudo: yes

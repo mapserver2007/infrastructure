@@ -1,4 +1,5 @@
 sandbox/
 database/vagrant/**/.vagrant
 test/vagrant/**/.vagrant
-web/vagrant/**/.vagrant
+test/vagrant/**/synced_folder/*.tar
+test/vagrant/**/restore/**/files/*.tar
