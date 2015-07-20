@@ -9,9 +9,12 @@
 - name: docker run(data container)
   shell: docker run -itd -v /mnt/docker/mysql --name data_mysql docker/data
   sudo: yes
-- name: mysql data restore
-  shell: cat mysql.backup.tar | sudo docker exec -i data_mysql tar x -C /
-  sudo: yes
 - name: docker run(database container)
   shell: docker run -itd --privileged --volumes-from data_mysql --name database docker/database /sbin/init
+  sudo: yes
+- name: docker provision for mysql
+  shell: docker exec -it database ansible-playbook -i "localhost," /root/ansible/setup.yml
+  sudo: yes
+- name: mysql data restore
+  shell: cat mysql.backup.tar | sudo docker exec -i data_mysql tar x -C /
   sudo: yes
