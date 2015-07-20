@@ -24,3 +24,18 @@
 * synced_folder
   * vagrantとホスト間で共有するディレクトリ
   * バックアップファイルの転送に使用する
+
+## コマンド
+MySQLバックアップ
+
+```
+$> vagrant ssh-config >> ~/.ssh/config
+$> ssh-copy-id -i ~/.ssh/id_rsa_vagrant_test.pub test
+$> ansible-playbook -i hosts backup/backup-mysql.yml --private-key=~/.ssh/id_rsa_vagrant_test
+```
+
+MySQLリストア
+
+```
+$> ansible-playbook -i hosts restore/restore.yml --private-key=~/.ssh/id_rsa_vagrant_test
+```

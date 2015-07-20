@@ -5,6 +5,6 @@
   roles:
     - common
     - data-container
-    - database-container
-    # - httpd-only-container
+    # - database-container
+    - httpd-container
 #    - webstream-container
