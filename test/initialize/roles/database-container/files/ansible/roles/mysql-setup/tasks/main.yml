@@ -1,18 +1,10 @@
 - name: set yum repository
   yum: name={{ item }}
   with_items:
-    - ftp://rpmfind.net/linux/centos/7.1.1503/extras/x86_64/Packages/epel-release-7-5.noarch.rpm
     - http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 - name: install mysql
   yum: name={{ item }} state=latest
   with_items:
+    - epel-release
     - mysql-community-server
     - MySQL-python
-- name: copy my.cnf
-  copy: "src=my.cnf dest=/etc/"
-- name: copy my.cnf to root
-  copy: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
-- name: add permission /var/log
-  shell: /usr/bin/chmod 777 -R /var/log
-- name: force restart mysql
-  shell: /usr/bin/systemctl restart mysql

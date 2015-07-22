@@ -1,0 +1,12 @@
+- name: httpd.conf settings
+  replace: >-
+    dest=/etc/httpd/conf/httpd.conf
+    regexp='{{ item.regexp }}'
+    replace='{{ item.replace }}'
+  with_items:
+  - regexp: 'AllowOverride None'
+    replace: 'AllowOverride All'
+  - regexp: 'DocumentRoot.+'
+    replace: 'DocumentRoot "/mnt/docker/apache/www"'
+  - regexp: '<Directory "/var/www/html">'
+    replace: '<Directory "/mnt/docker/apache/www">'

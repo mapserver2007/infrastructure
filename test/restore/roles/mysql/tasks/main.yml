@@ -1,3 +1,5 @@
+- name: copy ansible file
+  copy: "src=ansible dest=/home/vagrant/{{ docker.database.label }}/"
 - name: copy backup file
   copy: src=mysql.backup.tar dest=/home/vagrant/mysql.backup.tar
 - name: force docker data container clear
@@ -13,7 +15,7 @@
   shell: docker run -itd --privileged --volumes-from data_mysql --name database docker/database /sbin/init
   sudo: yes
 - name: docker provision for mysql
-  shell: docker exec -it database ansible-playbook -i "localhost," /root/ansible/setup.yml
+  shell: docker exec -it database ansible-playbook -i "localhost," /root/ansible/settings.yml
   sudo: yes
 - name: mysql data restore
   shell: cat mysql.backup.tar | sudo docker exec -i data_mysql tar x -C /

@@ -1,16 +1,18 @@
 FROM centos:centos7
 MAINTAINER Ryuichi Tanaka <mapserver2007@gmail.com>
 
+ADD ansible /root/ansible
+WORKDIR /root/ansible
+
 RUN yum -y install tar
 RUN yum -y install gcc
 RUN yum -y install python-devel
 RUN yum -y install python-setuptools
-RUN yum -y install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+RUN yum -y install epel-release
 RUN yum -y install python-pip
 RUN yum -y install httpd
 RUN pip install ansible
-ADD ansible /root/ansible
-
+RUN ansible-playbook -i "localhost," setup.yml
 
 EXPOSE 80
 CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
