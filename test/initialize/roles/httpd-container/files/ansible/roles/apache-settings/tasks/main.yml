@@ -1,2 +1,0 @@
-- name: force restart
-  shell: systemctl restart httpd

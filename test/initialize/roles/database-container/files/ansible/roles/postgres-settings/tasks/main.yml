@@ -1,0 +1,40 @@
+- name: set yum repository
+  yum: name={{ item }}
+  with_items:
+    - http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+- name: install postgresql
+  yum: name={{ item }} state=latest
+  with_items:
+    - epel-release
+    - postgresql94-server
+    - postgresql94-devel
+    - postgresql94-contrib
+    - python-psycopg2
+- name: change permission
+  file: path=/mnt/docker/postgres mode=0700 owner=postgres group=postgres
+- name: update service file
+  lineinfile: dest=/usr/lib/systemd/system/postgresql-9.4.service
+              regexp='^Environment=PGDATA=.*'
+              line='Environment=PGDATA=/mnt/docker/postgres'
+              insertbefore=BOF
+              state=present
+- name: initialize database
+  shell: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  sudo: yes
+- name: postgresql.conf settings
+  lineinfile: dest=/mnt/docker/postgres/postgresql.conf
+              regexp="{{ item.regexp }}"
+              line="{{ item.line }}"
+              insertbefore=BOF
+              state=present
+  with_items:
+    - { regexp: '^#?data_directory\s*=', line: "data_directory='/mnt/docker/postgres'" }
+    - { regexp: '^#?hba_file\s*=', line: "hba_file='/mnt/docker/postgres/pg_hba.conf'"}
+    - { regexp: '^#?ident_file\s*=', line: "ident_file='/mnt/docker/postgres/pg_ident.conf'"}
+- name: pg_hba.conf settings
+  lineinfile: >-
+    dest=/mnt/docker/postgres/pg_hba.conf
+    regexp='host\s+all\s+all\s+127.0.0.1/32\s.+$'
+    line='host all all 192.168.0.0/24 md5'
+    insertbefore=BOF
+  notify: restart postgresql

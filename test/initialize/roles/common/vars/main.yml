@@ -1,8 +1,12 @@
 ---
 docker:
+  common:
+    label: common
   data:
     label: data-container
   database:
     label: database-container
-  httpd:
-    label: httpd-container
+  php56_apache:
+    label: php5.6-apache-container
+  webstream:
+    label: test-webstream

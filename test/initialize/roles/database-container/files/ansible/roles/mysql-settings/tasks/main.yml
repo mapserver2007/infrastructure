@@ -1,3 +1,13 @@
+- name: set yum repository
+  yum: name={{ item }}
+  with_items:
+    - http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+- name: install mysql
+  yum: name={{ item }} state=latest
+  with_items:
+    - epel-release
+    - mysql-community-server
+    - MySQL-python
 - name: copy my.cnf
   copy: "src=my.cnf dest=/etc/"
 - name: copy my.cnf to root

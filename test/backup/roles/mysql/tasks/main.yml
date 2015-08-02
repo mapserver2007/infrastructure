@@ -1,5 +1,5 @@
 - name: dump mysql
-  shell: docker exec -it database sh -c "/usr/bin/mysqldump --defaults-extra-file=/etc/my.cnf --all-databases > /mnt/docker/mysql/mysqldump_$(date '+%Y%m%d%T' | tr -d :).sql"
+  shell: docker exec -it mysql sh -c "/usr/bin/mysqldump --defaults-extra-file=/etc/my.cnf --all-databases > /mnt/docker/mysql/mysqldump_$(date '+%Y%m%d%T' | tr -d :).sql"
   sudo: yes
 - name: backup mysql directory
   shell: docker run --volumes-from data_mysql -v /vagrant:/backup docker/data tar cvf /backup/mysql_$(date '+%Y%m%d%T' | tr -d :).tar /mnt/docker/mysql

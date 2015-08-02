@@ -37,5 +37,5 @@ $> ansible-playbook -i hosts backup/backup-mysql.yml --private-key=~/.ssh/id_rsa
 MySQLリストア
 
 ```
-$> ansible-playbook -i hosts restore/restore.yml --private-key=~/.ssh/id_rsa_vagrant_test
+$> ansible-playbook -i hosts restore/restore-mysql.yml --private-key=~/.ssh/id_rsa_vagrant_test
 ```

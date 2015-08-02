@@ -6,16 +6,16 @@
   shell: docker ps -a | grep data_mysql | awk '{if (length($1) > 0) system("sudo docker rm -f " $1)}'
   sudo: yes
 - name: force docker database container clear
-  shell: docker ps -a | grep database | awk '{if (length($1) > 0) system("sudo docker rm -f " $1)}'
+  shell: docker ps -a | grep mysql | awk '{if (length($1) > 0) system("sudo docker rm -f " $1)}'
   sudo: yes
 - name: docker run(data container)
   shell: docker run -itd -v /mnt/docker/mysql --name data_mysql docker/data
   sudo: yes
 - name: docker run(database container)
-  shell: docker run -itd --privileged --volumes-from data_mysql --name database docker/database /sbin/init
+  shell: docker run -itd --privileged --volumes-from data_mysql --name mysql docker/database /sbin/init
   sudo: yes
 - name: docker provision for mysql
-  shell: docker exec -it database ansible-playbook -i "localhost," /root/ansible/settings.yml
+  shell: docker exec -it mysql ansible-playbook -i "localhost," /root/ansible/settings.yml
   sudo: yes
 - name: mysql data restore
   shell: cat mysql.backup.tar | sudo docker exec -i data_mysql tar x -C /
