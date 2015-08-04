@@ -1,0 +1,5 @@
+---
+# mysql
+mysql_userid: mysql
+mysql_passwd: mysql
+db_name: sandbox

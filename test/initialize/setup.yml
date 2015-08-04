@@ -5,6 +5,6 @@
   roles:
     - common
     - data-container
+    - mysql-container
     - php5.6-apache-container
-    - database-container
     - test-webstream

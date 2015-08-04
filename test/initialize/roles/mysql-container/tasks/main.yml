@@ -1,0 +1,7 @@
+- name: copy docker file
+  copy: "src=Dockerfile dest=/home/vagrant/{{ docker.mysql.label }}/"
+- name: copy ansible file
+  copy: "src=ansible dest=/home/vagrant/{{ docker.mysql.label }}/"
+- name: docker build
+  shell: docker build -t docker/mysql mysql-container
+  sudo: yes

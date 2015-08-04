@@ -1,11 +1,20 @@
-- name: docker run (php5.6-apache)
-  shell: docker run -itd -p 80:80 --link mysql:mysql --privileged --volumes-from data_apache --name test-webstream docker/php56-apache /sbin/init
-  sudo: yes
-- name: copy docker file
+- name: copy ansible file
   copy: "src=ansible dest=/home/vagrant/{{ docker.webstream.label }}/"
-- name: copy ansible files to container
-  shell: tar -cv * | sudo docker exec -i test-webstream tar x -C /root/ansible chdir=test-webstream/ansible
+- name: docker run (mysql)
+  shell: docker run -itd --privileged --volumes-from data_mysql --name webstream-mysql docker/mysql /sbin/init
   sudo: yes
-- name: docker provision
-  shell: docker exec -it test-webstream ansible-playbook -i "localhost," /root/ansible/settings.yml
+- name: copy ansible files to container (mysql)
+  shell: tar -cv * | sudo docker exec -i webstream-mysql tar x -C /root/ansible chdir=test-webstream/ansible
+  sudo: yes
+- name: docker provision (mysql)
+  shell: docker exec -it webstream-mysql ansible-playbook -i "localhost," /root/ansible/mysql-settings.yml
+  sudo: yes
+- name: docker run (webstream)
+  shell: docker run -itd -p 80:80 --link webstream-mysql:mysql --privileged --volumes-from data_apache --name webstream docker/php56-apache /sbin/init
+  sudo: yes
+- name: copy ansible files to container (webstream)
+  shell: tar -cv * | sudo docker exec -i webstream tar x -C /root/ansible chdir=test-webstream/ansible
+  sudo: yes
+- name: docker provision (webstream)
+  shell: docker exec -it webstream ansible-playbook -i "localhost," /root/ansible/webstream-settings.yml
   sudo: yes

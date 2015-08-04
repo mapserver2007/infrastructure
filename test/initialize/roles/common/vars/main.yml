@@ -4,6 +4,8 @@ docker:
     label: common
   data:
     label: data-container
+  mysql:
+    label: mysql-container
   database:
     label: database-container
   php56_apache:

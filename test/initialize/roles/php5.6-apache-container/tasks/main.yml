@@ -5,9 +5,3 @@
 - name: docker build
   shell: docker build -t docker/php56-apache php5.6-apache-container
   sudo: yes
-# - name: docker run
-#   shell: docker run -itd -p 80:80 --privileged --volumes-from data_apache --name php5.6-apache docker/php56-apache /sbin/init
-#   sudo: yes
-# - name: docker provision
-#   shell: docker exec -it php5.6-apache ansible-playbook -i "localhost," /root/ansible/settings.yml
-#   sudo: yes
