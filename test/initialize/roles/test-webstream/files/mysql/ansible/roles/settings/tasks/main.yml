@@ -1,6 +1,13 @@
-- name: copy my.cnf
-  copy: "src=my.cnf dest=/etc/"
-- name: copy my.cnf to root
+- name: copy files
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - src: 'my.cnf'
+      dest: '/etc/'
+    - src: 'mysql_user.ini'
+      dest: '.'
+    - src: 'setup.sql'
+      dest: '.'
+- name: copy file with option
   copy: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
 - name: add permission /var/log
   shell: /usr/bin/chmod 777 -R /var/log
@@ -11,10 +18,14 @@
 - name: create timezone sql file
   shell: /usr/bin/echo 'SET @@SESSION.time_zone = "Asia/Tokyo";' > setup-timezone.sql
 - name: set JST timezone
-  shell: "/usr/bin/mysql -u root mysql < setup-timezone.sql"
+  shell: /usr/bin/mysql -u root mysql < setup-timezone.sql
 - name: create user
   mysql_user: "name={{ mysql_userid }} password={{ mysql_passwd }} host={{ item }} priv={{ db_name }}.*:ALL,GRANT state=present"
   with_items:
     - localhost
     - 192.168.0.%
     - 172.17.0.%
+- name: create database
+  mysql_db: "name={{ db_name }} state=present"
+- name: initialize table
+  shell: "/usr/bin/mysql --defaults-extra-file=mysql_user.ini {{ db_name }} < {{ mysql_sqlfile }}"

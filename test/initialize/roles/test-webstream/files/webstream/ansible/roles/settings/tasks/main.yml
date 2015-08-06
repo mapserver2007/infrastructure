@@ -15,3 +15,19 @@
 - name: apache force restart
   shell: systemctl restart httpd.service
   sudo: yes
+- name: rewrite mysql config file
+  lineinfile: >-
+    dest='/mnt/docker/apache/www/webstream-framework/WebStream/core/WebStream/Test/Sample/config/{{ item.dest }}'
+    regexp='{{ item.regexp }}'
+    line='{{ item.line }}'
+    state=present
+  with_items:
+    - dest: 'database.mysql.ini'
+      regexp: '^host\s?=.*'
+      line: 'host = mysql'
+    - dest: 'database.mysql.yml'
+      regexp: '^host\s?:.*'
+      line: 'host: mysql'
+    - dest: 'database.mysql.yaml'
+      regexp: '^host\s?:.*'
+      line: 'host: mysql'
