@@ -1,7 +1,10 @@
 - name: copy mysql ansible file
   copy: "src=mysql/ansible dest=/home/vagrant/{{ docker.webstream.label }}/mysql"
+- name: copy postgres ansible file
+  copy: "src=postgres/ansible dest=/home/vagrant/{{ docker.webstream.label }}/postgres"
 - name: copy webstream ansible file
   copy: "src=webstream/ansible dest=/home/vagrant/{{ docker.webstream.label }}/webstream"
+
 - name: docker run (mysql)
   shell: docker run -itd --privileged --volumes-from data_mysql --name webstream-mysql docker/mysql /sbin/init
   sudo: yes
@@ -11,6 +14,17 @@
 - name: docker provision (mysql)
   shell: docker exec -it webstream-mysql ansible-playbook -i "localhost," /root/ansible/settings.yml
   sudo: yes
+
+- name: docker run (postgres)
+  shell: docker run -itd --privileged --volumes-from data_postgres --name webstream-postgres docker/postgres /sbin/init
+  sudo: yes
+- name: copy ansible files to container (postgres)
+  shell: tar -cv * | sudo docker exec -i webstream-postgres tar x -C /root/ansible chdir=test-webstream/postgres/ansible
+  sudo: yes
+- name: docker provision (postgres)
+  shell: docker exec -it webstream-postgres ansible-playbook -i "localhost," /root/ansible/settings.yml
+  sudo: yes
+
 - name: docker run (webstream)
   shell: docker run -itd -p 80:80 --link webstream-mysql:mysql --privileged --volumes-from data_apache --name webstream docker/php56-apache /sbin/init
   sudo: yes

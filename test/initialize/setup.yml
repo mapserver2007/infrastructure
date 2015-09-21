@@ -6,5 +6,6 @@
     - common
     - data-container
     - mysql-container
+    - postgres-container
     - php5.6-apache-container
     - test-webstream

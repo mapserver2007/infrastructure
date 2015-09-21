@@ -1,0 +1,6 @@
+---
+# postgres
+postgresql_sqlfile: setup.sql
+postgresql_userid: postgres
+postgresql_passwd: postgres
+db_name: sandbox

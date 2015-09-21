@@ -1,0 +1,12 @@
+- name: set yum repository
+  yum: name={{ item }}
+  with_items:
+    - http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+- name: install postgresql
+  yum: name={{ item }} state=latest
+  with_items:
+    - epel-release
+    - postgresql94-server
+    - postgresql94-devel
+    - postgresql94-contrib
+    - python-psycopg2
