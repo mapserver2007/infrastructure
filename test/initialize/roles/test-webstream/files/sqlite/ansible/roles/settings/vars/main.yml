@@ -1,0 +1,5 @@
+---
+sqlite_download_url: http://www.sqlite.org/2015/
+sqlite_arvhice_name: sqlite-shell-linux-x86-3080900.zip
+sqlite_sqlfile: setup.sql
+db_name: sandbox

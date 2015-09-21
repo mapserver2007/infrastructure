@@ -7,5 +7,6 @@
     - data-container
     - mysql-container
     - postgres-container
+    - sqlite-container
     - php5.6-apache-container
     - test-webstream

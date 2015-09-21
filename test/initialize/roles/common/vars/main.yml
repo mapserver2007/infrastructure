@@ -8,6 +8,8 @@ docker:
     label: mysql-container
   postgres:
     label: postgres-container
+  sqlite:
+    label: sqlite-container
   database:
     label: database-container
   php56_apache:
