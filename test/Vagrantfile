@@ -6,11 +6,11 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "test" do |node|
-    node.vm.box = "chef/centos-7.0"
+    node.vm.box = "bento/centos-7.1"
     node.vm.hostname = "test"
     # node.vm.network :public_network, ip: "192.168.1.4"
     node.vm.network :public_network, ip: "192.168.0.206"
-    node.vm.network :forwarded_port, guest: 22, host: 2240
+    node.vm.network :forwarded_port, guest: 22, host: 2241
 
     config.vm.provision :ansible do |ansible|
       ansible.playbook = "initialize/setup.yml"
