@@ -5,3 +5,4 @@
   roles:
     - webstream-mysql
     - webstream-postgres
+    - webstream-sqlite

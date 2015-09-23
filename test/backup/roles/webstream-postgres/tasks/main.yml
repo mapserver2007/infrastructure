@@ -1,4 +1,3 @@
-# dump database file
 - name: create dump file
   shell: "{{ item.shell }}"
   with_items:

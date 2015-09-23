@@ -3,5 +3,6 @@
   sudo: yes
   user: vagrant
   roles:
-    # - webstream-mysql
+    - webstream-mysql
     - webstream-postgres
+    - webstream-sqlite

@@ -22,9 +22,6 @@
 host_key_checking = False
 ```
 
-### hosts
-
-
 ## 機能
 * initialize
   * ゼロベースでvagrant環境、各Dockerコンテナを作成するplaybook
@@ -44,16 +41,19 @@ host_key_checking = False
   * バックアップファイルの転送に使用する
 
 ## コマンド
-MySQLバックアップ
+### 初期化
+```
+$> vagrant up
+```
 
+### バックアップ
 ```
 $> vagrant ssh-config >> ~/.ssh/config
 $> ssh-copy-id -i ~/.ssh/id_rsa_vagrant_test.pub test
 $> ansible-playbook -i hosts backup/backup-mysql.yml --private-key=~/.ssh/id_rsa_vagrant_test
 ```
 
-MySQLリストア
-
+### リストア
 ```
 $> ansible-playbook -i hosts restore/restore-mysql.yml --private-key=~/.ssh/id_rsa_vagrant_test
 ```

@@ -1,4 +1,4 @@
-- name: copy ansible files
+- name: copy restore files
   copy: src={{ item.src }} dest={{ item.dest }}
   with_items:
     - { src: 'ansible', dest: '/home/vagrant/restore/webstream-postgres' }
