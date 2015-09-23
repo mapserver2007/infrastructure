@@ -1,0 +1,7 @@
+---
+- hosts: test
+  sudo: yes
+  user: vagrant
+  roles:
+    # - webstream-mysql
+    - webstream-postgres

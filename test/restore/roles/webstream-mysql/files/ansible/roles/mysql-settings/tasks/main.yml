@@ -1,0 +1,13 @@
+- name: copy files
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - src: 'my.cnf'
+      dest: '/etc/'
+    - src: 'mysql_user.ini'
+      dest: '.'
+- name: copy file with option
+  copy: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
+- name: add permission /var/log
+  shell: /usr/bin/chmod 777 -R /var/log
+- name: force restart mysql
+  shell: /usr/bin/systemctl restart mysql

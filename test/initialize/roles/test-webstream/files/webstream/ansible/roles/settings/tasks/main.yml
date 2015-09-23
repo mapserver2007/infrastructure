@@ -2,14 +2,13 @@
   git: "repo={{ repo_uri }} version={{ branch }} dest={{ dest_path }} update=yes accept_hostkey=yes"
 - name: create initial log file
   shell: "/usr/bin/touch {{ dest_path }}{{ test_log_path }}/webstream.test.log"
-- name: log directory add permission
-  file: path={{ dest_path }}{{ test_log_path }} mode=0777
-- name: create log files
-  file: path={{ dest_path }}{{ test_log_path }}/webstream.test.log mode=0777 state=touch
-- name: view cache directory add permission
-  file: path={{ dest_path }}{{ test_view_cache_path }} mode=0777
-- name: static file directory add permission
-  file: path={{ dest_path }}{{ test_static_file_path }} mode=0777
+- name: change permission
+  file: path="{{ item.path }}" mode="{{ item.mode }}"
+  with_items:
+    - { path: "{{ dest_path }}{{ test_log_path }}", mode: "0777", state: "directory" }
+    - { path: "{{ dest_path }}{{ test_log_path }}/webstream.test.log", mode: "0777", state: "touch" }
+    - { path: "{{ dest_path }}{{ test_view_cache_path }}", mode: "0777", state: "directory" }
+    - { path: "{{ dest_path }}{{ test_static_file_path }}", mode: "0777", state: "directory" }
 - name: execute composer
   composer: "command=install no_dev=no working_dir=/mnt/docker/apache/www/webstream-framework/WebStream"
 - name: apache force restart

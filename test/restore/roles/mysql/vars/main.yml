@@ -1,4 +1,0 @@
----
-docker:
-  database:
-    label: database-container
