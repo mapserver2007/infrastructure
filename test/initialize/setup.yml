@@ -4,9 +4,9 @@
   user: vagrant
   roles:
     - common
-    - data-container
-    - mysql-container
-    - postgres-container
-    - sqlite-container
-    - php5.6-apache-container
-    - test-webstream
+    - middlewares/data_only
+    - middlewares/mysql
+    - middlewares/postgres
+    - middlewares/sqlite
+    - middlewares/php5.6-apache
+    - applications/webstream

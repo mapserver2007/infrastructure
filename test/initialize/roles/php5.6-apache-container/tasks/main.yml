@@ -1,7 +1,0 @@
-- name: copy docker file
-  copy: "src=Dockerfile dest=/home/vagrant/{{ docker.php56_apache.label }}/"
-- name: copy ansible file
-  copy: "src=ansible dest=/home/vagrant/{{ docker.php56_apache.label }}/"
-- name: docker build
-  shell: docker build -t docker/php56-apache php5.6-apache-container
-  sudo: yes

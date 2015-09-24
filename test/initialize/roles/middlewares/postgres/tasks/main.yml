@@ -1,0 +1,9 @@
+- name: create directory
+  file: path=/home/vagrant/middlewares/postgres state=directory
+- name: copy docker file
+  copy: src=Dockerfile dest=/home/vagrant/middlewares/postgres
+- name: copy ansible file
+  copy: src=ansible dest=/home/vagrant/middlewares/postgres
+- name: docker build
+  shell: docker build -t docker/postgres middlewares/postgres
+  sudo: yes

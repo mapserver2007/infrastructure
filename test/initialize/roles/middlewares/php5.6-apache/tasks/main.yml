@@ -1,0 +1,9 @@
+- name: create directory
+  file: path=/home/vagrant/middlewares/php5.6-apache state=directory
+- name: copy docker file
+  copy: src=Dockerfile dest=/home/vagrant/middlewares/php5.6-apache
+- name: copy ansible file
+  copy: src=ansible dest=/home/vagrant/middlewares/php5.6-apache
+- name: docker build
+  shell: docker build -t docker/php56-apache middlewares/php5.6-apache
+  sudo: yes

@@ -12,8 +12,10 @@
 - name: force docker container clear
   shell: docker ps -a -q | awk '{if (length($1) > 0) system("sudo docker rm -f " $1)}'
   sudo: yes
+- name: create directory
+  file: path=/home/vagrant/common state=directory
 - name: copy docker file
-  copy: "src=Dockerfile dest=/home/vagrant/{{ docker.common.label }}/"
+  copy: "src=Dockerfile dest=/home/vagrant/common"
 - name: docker build
   shell: docker build -t docker/base common
   sudo: yes

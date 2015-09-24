@@ -1,0 +1,38 @@
+- name: get WebStream repository
+  git: "repo={{ repo_uri }} version={{ branch }} dest={{ dest_path }} update=yes accept_hostkey=yes"
+- name: create initial log file
+  shell: "/usr/bin/touch {{ dest_path }}{{ test_log_path }}/webstream.test.log"
+- name: change permission
+  file: path="{{ item.path }}" mode="{{ item.mode }}"
+  with_items:
+    - { path: "{{ dest_path }}{{ test_log_path }}", mode: "0777", state: "directory" }
+    - { path: "{{ dest_path }}{{ test_log_path }}/webstream.test.log", mode: "0777", state: "touch" }
+    - { path: "{{ dest_path }}{{ test_view_cache_path }}", mode: "0777", state: "directory" }
+    - { path: "{{ dest_path }}{{ test_static_file_path }}", mode: "0777", state: "directory" }
+- name: execute composer
+  composer: "command=install no_dev=no working_dir=/mnt/docker/apache/www/webstream-framework/WebStream"
+- name: apache force restart
+  shell: systemctl restart httpd.service
+  sudo: yes
+- name: rewrite mysql config file
+  lineinfile: >-
+    dest='/mnt/docker/apache/www/webstream-framework/WebStream/core/WebStream/Test/Sample/config/{{ item.dest }}'
+    regexp='{{ item.regexp }}'
+    line='{{ item.line }}'
+    state=present
+  with_items:
+    - dest: 'database.mysql.ini'
+      regexp: '^host\s?=.*'
+      line: 'host = mysql'
+    - dest: 'database.mysql.yml'
+      regexp: '^host\s?:.*'
+      line: 'host: mysql'
+    - dest: 'database.mysql.yaml'
+      regexp: '^host\s?:.*'
+      line: 'host: mysql'
+    - dest: 'database.postgresql.ini'
+      regexp: '^host\s?=.*'
+      line: 'host: postgres'
+    - dest: 'database.postgresql.ini'
+      regexp: '^dbfile\s?=.*'
+      line: 'dbfile = /mnt/docker/sqlite/sandbox.db'

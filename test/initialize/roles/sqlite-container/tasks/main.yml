@@ -1,7 +1,0 @@
-- name: copy docker file
-  copy: "src=Dockerfile dest=/home/vagrant/{{ docker.sqlite.label }}/"
-- name: copy ansible file
-  copy: "src=ansible dest=/home/vagrant/{{ docker.sqlite.label }}/"
-- name: docker build
-  shell: docker build -t docker/sqlite sqlite-container
-  sudo: yes

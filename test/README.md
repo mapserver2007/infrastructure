@@ -25,17 +25,13 @@ host_key_checking = False
 ## 機能
 * initialize
   * ゼロベースでvagrant環境、各Dockerコンテナを作成するplaybook
-  * `$> vagrant up`または`$> vagrant provision`
 * backup
   * MySQLなどのデータベース、httpdなどの静的ファイルのバックアップを実行するplaybook
-  * `$> ansible-playbook -i hosts backup/backup.yml --private-key=~/.ssh/id_rsa_vagrant_test`
 * provision[作成中]
   * Data only containerではない通常のコンテナの差し替えを行うplaybook
   * ある程度汚くなったので綺麗にしつつ構成はそのままにする場合など
 * restore
-  * backupで保存したバあｍックアップファイルをリストアするplaybook
-  * バックアップファイルを`files/mysql.backup.tar`として配置する(これは手動)
-  * `$> ansible-playbook -i hosts restore/restore.yml --private-key=~/.ssh/id_rsa_vagrant_test`
+  * backupで保存したバックアップファイルをリストアするplaybook
 * synced_folder
   * vagrantとホスト間で共有するディレクトリ
   * バックアップファイルの転送に使用する
@@ -46,6 +42,11 @@ host_key_checking = False
 $> vagrant up
 ```
 
+または
+
+```
+$> vagrant provision
+```
 ### バックアップ
 ```
 $> vagrant ssh-config >> ~/.ssh/config
@@ -54,6 +55,7 @@ $> ansible-playbook -i hosts backup/backup-mysql.yml --private-key=~/.ssh/id_rsa
 ```
 
 ### リストア
+* `restore/*/files/backupfile`にリストアする.tarファイルを配置
 ```
 $> ansible-playbook -i hosts restore/restore-mysql.yml --private-key=~/.ssh/id_rsa_vagrant_test
 ```
