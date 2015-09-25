@@ -5,15 +5,11 @@
 - name: docker build
   shell: sudo docker build -t docker/data middlewares/data_only
   sudo: yes
-- name: docker run (for mysql)
-  shell: docker run -itd -v /mnt/docker/mysql --name data_mysql docker/data
-  sudo: yes
-- name: docker run (for postgres)
-  shell: docker run -itd -v /mnt/docker/postgres --name data_postgres docker/data
-  sudo: yes
-- name: docker run (for postgres)
-  shell: docker run -itd -v /mnt/docker/sqlite --name data_sqlite docker/data
-  sudo: yes
-- name: docker run (for apache)
-  shell: docker run -itd -v /mnt/docker/apache/www --name data_apache docker/data
+- name: docker run
+  shell: "{{ item.shell }}"
+  with_items:
+    - { shell: docker run -itd -v /mnt/docker/mysql --name data_mysql docker/data }
+    - { shell: docker run -itd -v /mnt/docker/postgres --name data_postgres docker/data }
+    - { shell: docker run -itd -v /mnt/docker/sqlite --name data_sqlite docker/data }
+    - { shell: docker run -itd -v /mnt/docker/apache/www --name data_apache docker/data }
   sudo: yes
