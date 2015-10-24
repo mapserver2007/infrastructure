@@ -9,10 +9,10 @@
     - { path: "{{ test_app_dir }}{{ test_log_path }}/webstream.test.log", mode: "0777", state: "touch" }
     - { path: "{{ test_app_dir }}{{ test_view_cache_path }}", mode: "0777", state: "directory" }
     - { path: "{{ test_app_dir }}{{ test_static_file_path }}", mode: "0777", state: "directory" }
-- name: execute composer
+- name: execute composer (Test)
   composer: "command=install working_dir={{ test_dir }}"
-- name: execute composer
-  composer: "command=install no_dev=no working_dir={{ test_app_dir }}"
+- name: execute composer (TestApp)
+  composer: "command=install working_dir={{ test_app_dir }}"
 - name: apache force restart
   shell: systemctl restart httpd.service
   sudo: yes
@@ -34,7 +34,7 @@
       line: 'host: mysql'
     - dest: 'database.postgresql.ini'
       regexp: '^host\s?=.*'
-      line: 'host: postgres'
-    - dest: 'database.postgresql.ini'
+      line: 'host = postgres'
+    - dest: 'database.sqlite.ini'
       regexp: '^dbfile\s?=.*'
       line: 'dbfile = /mnt/docker/sqlite/sandbox.db'

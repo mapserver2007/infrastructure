@@ -1,0 +1,11 @@
+- name: download jenkins.repo
+  get_url: url=http://pkg.jenkins-ci.org/redhat/jenkins.repo sha256sum=bc78fd8593e8bec45fb752edbe699b9ebdb61174236e098e5a4ddc864fb52c32 dest=/etc/yum.repos.d/ force=yes
+- name: rpm key import
+  rpm_key: key=http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key state=present
+- name: install jenkins
+  yum: name={{ item }} state=latest
+  with_items:
+    - java-1.8.0-openjdk
+    - jenkins
+- name: start jenkins
+  service: name=jenkins state=started

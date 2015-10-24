@@ -1,0 +1,9 @@
+- name: install jenkins plugins
+  get_url: url={{ item }} dest=/var/lib/jenkins/plugins/ force=yes
+  with_items:
+    - https://updates.jenkins-ci.org/latest/scm-api.hpi
+    - https://updates.jenkins-ci.org/latest/git-client.hpi
+    - https://updates.jenkins-ci.org/latest/git.hpi
+    - https://updates.jenkins-ci.org/latest/ansible.hpi
+- name: restart jenkins
+  service: name=jenkins state=restarted
