@@ -3,3 +3,4 @@ test/.vagrant
 test/synced_folder/*.tar
 test/restore/**/backupfile/*.tar
 ci/.vagrant
+ci/synced_folder/*.tar.gz

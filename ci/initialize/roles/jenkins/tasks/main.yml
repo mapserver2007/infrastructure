@@ -10,9 +10,11 @@
 - name: enable sudo in jenkins
   lineinfile: >-
     dest=/etc/sudoers
-    state=absent
-    insertafter=EOF
+    state=present
+    regexp="^#Defaults requiretty"
     line="Defaults:jenkins !requiretty\njenkins ALL=(ALL) NOPASSWD:ALL"
   sudo: yes
+- name: create jenkins backup directory
+  file: path=/var/tmp/jenkins_backup/ mode=0755 state=directory
 - name: start jenkins
   service: name=jenkins state=started
