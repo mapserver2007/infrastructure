@@ -7,5 +7,12 @@
   with_items:
     - java-1.8.0-openjdk
     - jenkins
+- name: enable sudo in jenkins
+  lineinfile: >-
+    dest=/etc/sudoers
+    state=absent
+    insertafter=EOF
+    line="Defaults:jenkins !requiretty\njenkins ALL=(ALL) NOPASSWD:ALL"
+  sudo: yes
 - name: start jenkins
   service: name=jenkins state=started

@@ -5,8 +5,12 @@
     - git
     - gcc
     - python-devel
+    - python-setuptools
+    - python-pip
     - libselinux-python
     - docker
+- name: install ansible
+  pip: name=ansible state=present
 - name: restart docker
   service: name=docker state=restarted
 - name: force docker container clear

@@ -1,5 +1,5 @@
 - name: install jenkins plugins
-  get_url: url={{ item }} dest=/var/lib/jenkins/plugins/ force=yes
+  get_url: url={{ item }} dest=/var/lib/jenkins/plugins/
   with_items:
     - https://updates.jenkins-ci.org/latest/scm-api.hpi
     - https://updates.jenkins-ci.org/latest/git-client.hpi
