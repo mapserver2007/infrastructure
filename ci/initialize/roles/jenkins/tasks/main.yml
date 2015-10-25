@@ -15,6 +15,6 @@
     line="Defaults:jenkins !requiretty\njenkins ALL=(ALL) NOPASSWD:ALL"
   sudo: yes
 - name: create jenkins backup directory
-  file: path=/var/tmp/jenkins_backup/ mode=0755 state=directory
+  file: path=/tmp/jenkins_backup/ mode=0755 owner=jenkins group=jenkins state=directory
 - name: start jenkins
   service: name=jenkins state=started

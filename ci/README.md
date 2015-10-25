@@ -37,3 +37,22 @@ $> vagrant provision
 $> vagrant ssh-config --host 192.168.0.207 >> ~/.ssh/config
 $> ssh 192.168.0.207
 ```
+
+## jenkins job settings
+
+### webstream-framework
+* ソースコード管理(Git)
+
+`git://github.com/webstream-framework/infrastructure.git`
+`*/master`
+
+* ビルド(シェルを実行)
+```sh
+sudo ansible-playbook -i "localhost," ansible/setup.yml
+sudo docker exec webstream bash -c "cd /mnt/docker/apache/www/webstream-framework/Test/ && vendor/bin/phing -f build.xml"
+sudo docker cp webstream:/mnt/docker/apache/www/webstream-framework/Test/reports/phpunit.xml .
+```
+
+* JUnitテスト結果集計
+
+`phpunit.xml`を指定

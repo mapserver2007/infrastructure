@@ -3,4 +3,5 @@ test/.vagrant
 test/synced_folder/*.tar
 test/restore/**/backupfile/*.tar
 ci/.vagrant
-ci/synced_folder/*.tar.gz
+ci/synced_folder/*
+!ci/synced_folder/.gitkeep
