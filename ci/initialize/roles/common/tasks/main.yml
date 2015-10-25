@@ -10,7 +10,7 @@
     - libselinux-python
     - docker
 - name: install ansible
-  pip: name=ansible state=present
+  pip: name=ansible state=latest
 - name: restart docker
   service: name=docker state=restarted
 - name: force docker container clear
