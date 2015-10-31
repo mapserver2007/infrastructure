@@ -1,4 +1,0 @@
-- name: execute backup
-  shell: "{{ item.shell }}"
-  with_items:
-    - { shell: "docker run --volumes-from data_sqlite -v /vagrant:/backup docker/data tar cvf /backup/sqlite_$(date '+%Y%m%d%T' | tr -d :).tar /mnt/docker/sqlite" }

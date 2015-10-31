@@ -1,6 +1,0 @@
-- name: update service file
-  lineinfile: dest=/usr/lib/systemd/system/postgresql-9.4.service
-              regexp='^Environment=PGDATA=.*'
-              line='Environment=PGDATA=/mnt/docker/postgres/'
-              insertbefore=BOF
-              state=present

@@ -1,5 +1,0 @@
----
-- hosts: web
-  user: root
-  roles:
-    - apache

@@ -1,5 +1,15 @@
 # README
 
+## 設定済み
+* ci (192.168.1.4)
+    * CIサーバ
+        * 各アプリケーションの自動テスト
+          * WebStream
+          * rankforce
+          * log4ever
+          * Jsonlenium
+
+## 未設定
 * web (192.168.1.2)
     * Webサーバ
         * Apache
@@ -7,13 +17,6 @@
     * データベースサーバ
         * 本番用DB
         * MySQL
-* test (192.168.1.4)
-    * テストサーバ
-        * テスト用のDB、Webサーバもこっちにいれる
-        * Jenkins
-        * phpunit
-        * rspec
-        * selenium
 * file (192.168.1.5)
     * ファイルサーバ
         * 気が向いたら作る

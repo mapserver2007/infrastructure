@@ -1,6 +1,0 @@
----
-# mysql
-mysql_sqlfile: setup.sql
-mysql_userid: mysql
-mysql_passwd: mysql
-db_name: sandbox

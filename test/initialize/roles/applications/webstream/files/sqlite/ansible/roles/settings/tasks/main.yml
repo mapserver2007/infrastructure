@@ -1,6 +1,0 @@
-- name: copy sqlfile
-  copy: "src={{ sqlite_sqlfile }} dest=/root/ansible"
-- name: initialize table
-  shell: "/usr/bin/sqlite3 /mnt/docker/sqlite/{{ db_name }}.db < /root/ansible/{{ sqlite_sqlfile }}"
-- name: change permission
-  file: path=/mnt/docker/sqlite/ mode=0777 state=directory recurse=yes

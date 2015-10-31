@@ -1,8 +1,0 @@
-- name: create dump file
-  shell: "{{ item.shell }}"
-  with_items:
-    - { shell: "docker exec -it webstream-postgres sh -c 'runuser -l postgres -c \"/usr/bin/pg_dumpall > /mnt/docker/postgres/pgdump_$(date '+%Y%m%d%T' | tr -d :).sql\"'"}
-- name: execute backup
-  shell: "{{ item.shell }}"
-  with_items:
-    - { shell: "docker run --volumes-from data_postgres -v /vagrant:/backup docker/data tar cvf /backup/postgres_$(date '+%Y%m%d%T' | tr -d :).tar /mnt/docker/postgres" }

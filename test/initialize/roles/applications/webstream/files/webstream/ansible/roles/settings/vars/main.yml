@@ -1,7 +1,0 @@
-repo_uri: git://github.com/webstream-framework/Test.git
-branch: master
-test_dir: /mnt/docker/apache/www/webstream-framework/Test
-test_app_dir: /mnt/docker/apache/www/webstream-framework/Test/TestApp
-test_log_path: /log
-test_view_cache_path: /app/views/_cache
-test_static_file_path: /app/views/_public

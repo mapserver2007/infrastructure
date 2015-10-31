@@ -1,8 +1,0 @@
-- name: create dump file
-  shell: "{{ item.shell }}"
-  with_items:
-    - { shell: "docker exec -it webstream-mysql sh -c \"/usr/bin/mysqldump --defaults-extra-file=/etc/my.cnf --all-databases > /mnt/docker/mysql/mysqldump_$(date '+%Y%m%d%T' | tr -d :).sql\"" }
-- name: execute backup
-  shell: "{{ item.shell }}"
-  with_items:
-    - { shell: "docker run --volumes-from data_mysql -v /vagrant:/backup docker/data tar cvf /backup/mysql_$(date '+%Y%m%d%T' | tr -d :).tar /mnt/docker/mysql" }
