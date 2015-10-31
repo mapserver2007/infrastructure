@@ -1,10 +1,16 @@
 - name: install jenkins plugins
-  get_url: url={{ item }} dest=/var/lib/jenkins/plugins/
+  get_url: url="https://updates.jenkins-ci.org/latest/{{ item }}.hpi" dest=/var/lib/jenkins/plugins/
   with_items:
-    - https://updates.jenkins-ci.org/latest/scm-api.hpi
-    - https://updates.jenkins-ci.org/latest/git-client.hpi
-    - https://updates.jenkins-ci.org/latest/git.hpi
-    - https://updates.jenkins-ci.org/latest/ansible.hpi
-    - https://updates.jenkins-ci.org/latest/thinBackup.hpi
+    - scm-api
+    - git-client
+    - git
+    - ansible
+    - thinBackup
+    - buildtriggerbadge
+    - jobConfigHistory
+    - timestamper
+    - monitoring
+    - saferestart
+    - simple-theme-plugin
 - name: restart jenkins
   service: name=jenkins state=restarted

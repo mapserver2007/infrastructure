@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--memory", 1024]
     end
 
-    config.vm.synced_folder "synced_folder", "/tmp/jenkins_backup"
+    config.vm.synced_folder "synced_folder", "/var/tmp/jenkins_backup"
 
     config.ssh.pty = true
   end

@@ -13,6 +13,6 @@
   pip: name=ansible state=latest
 - name: restart docker
   service: name=docker state=restarted
-- name: force docker container clear
-  shell: docker ps -a -q | awk '{if (length($1) > 0) system("sudo docker rm -f " $1)}'
+- name: change timezone
+  copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
   sudo: yes
