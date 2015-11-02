@@ -1,0 +1,9 @@
+- name: copy ansible file
+  tags: always
+  copy: src=ansible dest="{{ ansible_env.PWD }}"
+- include: ruby2.0/docker-run-provision.yml
+  tags: ruby2.0
+- include: ruby2.1/docker-run-provision.yml
+  tags: ruby2.1
+- include: ruby2.2/docker-run-provision.yml
+  tags: ruby2.2

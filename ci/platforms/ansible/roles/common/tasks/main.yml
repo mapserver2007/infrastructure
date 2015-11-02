@@ -1,0 +1,31 @@
+- name: install packages
+  tags: always
+  yum: name={{ item }} state=latest
+  with_items:
+    - epel-release
+    - git
+    - gcc
+    - python-devel
+    - libselinux-python
+    - docker
+- name: restart docker
+  tags: always
+  service: name=docker state=restarted
+- name: docker container clear
+  tags: ruby2.2
+  shell: docker ps -a | grep '{{ item }}' | awk '{print $1}' | xargs --no-run-if-empty docker rm -f
+  with_items:
+    - ruby22
+  sudo: yes
+- name: docker container clear
+  tags: ruby2.1
+  shell: docker ps -a | grep '{{ item }}' | awk '{print $1}' | xargs --no-run-if-empty docker rm -f
+  with_items:
+    - ruby21
+  sudo: yes
+- name: docker container clear
+  tags: ruby2.0
+  shell: docker ps -a | grep '{{ item }}' | awk '{print $1}' | xargs --no-run-if-empty docker rm -f
+  with_items:
+    - ruby20
+  sudo: yes

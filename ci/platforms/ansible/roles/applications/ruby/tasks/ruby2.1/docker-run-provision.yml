@@ -1,0 +1,12 @@
+- name: docker run (Ruby2.1 application)
+  shell: docker run -itd --name ruby21 docker/ruby /sbin/init
+  sudo: yes
+- name: copy ansible files to container (Ruby2.1 application)
+  shell: tar -cv * | sudo docker exec -i ruby21 tar x -C /root/ansible chdir=ansible
+  sudo: yes
+- name: copy config files to container (Ruby2.1 application)
+  shell: tar -cv * | sudo docker exec -i ruby21 tar x -C /root/secret_keys chdir=/var/tmp/secret_keys
+  sudo: yes
+- name: docker provision (Ruby2.1 application)
+  shell: docker exec -t ruby21 ansible-playbook -i "localhost," /root/ansible/settings.yml
+  sudo: yes
