@@ -1,8 +1,0 @@
-- name: get logr4ever from repository
-  git: "repo={{ repo_uri }} version={{ branch }} dest={{ source_dir }} update=yes accept_hostkey=yes"
-- name: bundle install
-  shell: bundle install chdir={{ source_dir }}
-- name: copy config files
-  copy: src="/root/secret_keys/{{ item }}" dest=/root/logr4ever/config
-  with_items:
-    - evernote.auth.yml

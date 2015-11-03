@@ -1,7 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  roles:
-    - {role: common, tags: always}
-    - {role: middlewares/ruby, tags: [ruby2.0, ruby2.1, ruby2.2]}
-    - {role: applications/ruby, tags: [ruby2.0, ruby2.1, ruby2.2]}
