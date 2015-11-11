@@ -3,11 +3,11 @@
 ## 設定済み
 * ci (192.168.1.4)
     * CIサーバ
-        * 各アプリケーションの自動テスト
-          * WebStream
+        * jenkins-echelonベースの自動テスト
           * rankforce
           * log4ever
-          * Jsonlenium
+        * 個別の自動テスト
+          * webstream-framework
 
 ## 未設定
 * web (192.168.1.2)
