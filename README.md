@@ -4,7 +4,7 @@
 ※IPアドレスは仮
 * ci (192.168.1.4)
     * CIサーバ
-        * jenkins-echelonベースの自動テスト
+        * [jenkins-echelon](https://github.com/mapserver2007/jenkins-echelon)ベースの自動テスト
             * rankforce
             * log4ever
         * 個別の自動テスト
