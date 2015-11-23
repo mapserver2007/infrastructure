@@ -1,0 +1,11 @@
+---
+- hosts: php
+  sudo: yes
+  user: vagrant
+  roles:
+    - common
+    - php
+    - apache
+    - mysql
+    - postgres
+    - sqlite

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="WebStream" basedir="." default="main">
+    <target name="main" depends="init,test"></target>
+
+    <!-- init -->
+    <target name="init">
+        <delete dir="reports" includeemptydirs="true" />
+        <mkdir dir="reports" />
+    </target>
+
+    <!-- phpdoc -->
+    <target name="phpdoc">
+        <delete dir="reports/phpdoc" includeemptydirs="true" />
+        <mkdir dir="reports/phpdoc" />
+        <exec dir="./vendor/bin" command="phpdoc -d TestApp/core -t reports/phpdoc -i TestApp/core/WebStream"/>
+    </target>
+
+    <!-- PHPUnit -->
+    <target name="test">
+        <phpunit haltonfailure="false" printsummary="true">
+            <formatter type="xml" outfile="reports/phpunit.xml"/>
+            <batchtest>
+                <fileset dir="Test">
+                    <include name="**/*Test.php" />
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+    <!-- PHPMD -->
+    <target name="phpmd">
+         <phpmd rulesets="codesize,unusedcode,design,naming">
+             <fileset dir="Test" >
+                 <include name="**/*.php" />
+                 <exclude name="**/*Test.php" />
+             </fileset>
+             <formatter type="xml" outfile="reports/pmd.xml"/>
+         </phpmd>
+    </target>
+    <!-- PHPCPD -->
+    <target name="phpcpd">
+         <phpcpd>
+              <fileset dir="Test">
+                  <include name="**/*.php" />
+                  <exclude name="**/*Test.php" />
+              </fileset>
+              <formatter type="pmd" outfile="reports/cpd.xml"/>
+         </phpcpd>
+    </target>
+</project>

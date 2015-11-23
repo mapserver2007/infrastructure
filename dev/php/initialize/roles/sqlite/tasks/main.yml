@@ -1,0 +1,9 @@
+- name: install sqlite3
+  shell: >-
+    /usr/bin/wget {{ sqlite_download_url }}{{ sqlite_arvhice_name }} &&
+    /usr/bin/unzip {{ sqlite_arvhice_name }} &&
+    mv -f sqlite3 /usr/bin/sqlite3
+- name: copy sqlfile
+  copy: "src={{ sqlite_sqlfile }} dest=/home/vagrant/setup"
+- name: initialize table
+  shell: "/usr/bin/sqlite3 /var/tmp/{{ db_name }}.db < /home/vagrant/setup/{{ sqlite_sqlfile }}"

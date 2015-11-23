@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "php" do |node|
+    # node.vm.box = "rasmus/php7dev"
+    node.vm.box = "bento/centos-7.1"
+    node.vm.hostname = "php"
+    node.vm.network :public_network, ip: "192.168.0.150", bridge: "en1: Wi-Fi (AirPort)"
+    node.vm.network :forwarded_port, guest: 22, host: 2252
+  end
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "initialize/setup.yml"
+    ansible.host_key_checking = false
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 1024]
+  end
+
+  config.vm.synced_folder "~/Dropbox/workspace/webstream-framework/WebStream", "/home/vagrant/workspace",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant",
+    rsync__exclude: [".git/", "sandbox/"]
+
+  config.ssh.pty = true
+end

@@ -1,0 +1,27 @@
+- name: set yum repository
+  tags: always
+  yum: name={{ item }}
+  with_items:
+    - http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+- name: install php
+  tags: php7.0
+  yum: pkg={{ item }} state=latest enablerepo=remi,remi-php70
+  with_items:
+    - php
+    - php-devel
+    - php-mbstring
+    - php-mysql
+    - php-pgsql
+    - php-pdo
+    - php-xml
+    - php-pecl-xdebug
+- name: php.ini settings
+  tags: always
+  lineinfile: >-
+    dest=/etc/php.ini
+    regexp='^;date.timezone'
+    line="date.timezone = Asia/Tokyo"
+    state=present
+- name: install composer
+  tags: always
+  shell: /usr/bin/curl -s http://getcomposer.org/installer | php && mv -f composer.phar /usr/bin/composer

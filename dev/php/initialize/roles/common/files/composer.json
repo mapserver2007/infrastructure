@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpunit/phpunit": "*",
+        "phing/phing": "2.*"
+    }
+}
