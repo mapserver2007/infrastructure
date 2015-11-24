@@ -4,7 +4,6 @@
   with_items:
     - http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 - name: install php
-  tags: php7.0
   yum: pkg={{ item }} state=latest enablerepo=remi,remi-php70
   with_items:
     - php

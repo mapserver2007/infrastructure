@@ -20,15 +20,16 @@
   copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
   sudo: yes
 - name: create workspace directory
-  file: path=/home/vagrant/workspace state=directory owner=vagrant group=vagrant mode=0777
-- name: create test directory
-  file: path=/home/vagrant/test state=directory owner=vagrant group=vagrant mode=0777
-- name: create setup file directory
-  file: path=/home/vagrant/setup state=directory owner=vagrant group=vagrant mode=0777
+  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
+  with_items:
+    - /home/vagrant/
+    - /home/vagrant/workspace/
+    - /home/vagrant/test/
+    - /home/vagrant/setup/
 - name: copy files
   copy: src="{{ item }}" dest=/home/vagrant/test
   with_items:
     - composer.json
     - build.xml
-- name: composer install
-  composer: "command=install prefer_dist=yes working_dir=/home/vagrant/test/"
+# - name: composer install
+#   composer: "command=install prefer_dist=yes working_dir=/home/vagrant/test/"
