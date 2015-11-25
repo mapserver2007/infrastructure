@@ -21,7 +21,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
-  config.vm.synced_folder "~/Dropbox/workspace/webstream-framework/WebStream", "/home/vagrant/workspace",
+  config.vm.synced_folder "~/Dropbox/workspace/webstream-framework/Test", "/workspace/webstream-framework/Test",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant",
+    rsync__exclude: [".git/", "sandbox/", "vendor/", "TestApp/core"]
+
+  config.vm.synced_folder "~/Dropbox/workspace/webstream-framework/WebStream", "/workspace/webstream-framework/Test/TestApp/core",
     type: "rsync",
     owner: "vagrant",
     group: "vagrant",

@@ -8,6 +8,9 @@
   - regexp: 'AllowOverride None'
     replace: 'AllowOverride All'
   - regexp: 'DocumentRoot.+'
-    replace: 'DocumentRoot "/home/vagrant/workspace"'
+    replace: 'DocumentRoot "/workspace"'
   - regexp: '<Directory "/var/www/html">'
-    replace: '<Directory "/home/vagrant/workspace">'
+    replace: '<Directory "/workspace">'
+- name: force start httpd
+  shell: systemctl start httpd.service
+  sudo: yes
