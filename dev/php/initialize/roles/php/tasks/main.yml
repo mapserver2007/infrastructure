@@ -16,8 +16,11 @@
 - name: php.ini settings
   lineinfile: >-
     dest=/etc/php.ini
-    regexp='^;date.timezone'
-    line="date.timezone = Asia/Tokyo"
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
     state=present
+  with_items:
+    - { regexp: '^;date.timezone', line: 'date.timezone = Asia/Tokyo' }
+    - { regexp: '^display_errors.*', line: 'display_errors = On'}
 - name: install composer
   shell: /usr/bin/curl -s http://getcomposer.org/installer | php && mv -f composer.phar /usr/bin/composer
