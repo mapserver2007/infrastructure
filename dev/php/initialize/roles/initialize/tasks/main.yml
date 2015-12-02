@@ -19,11 +19,3 @@
 - name: change timezone
   copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
   sudo: yes
-- name: create workspace directory
-  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
-  with_items:
-    - /workspace/
-    - /workspace/webstream-framework/
-    - /workspace/webstream-framework/Test/
-    - /home/vagrant/setup/
-  sudo: yes

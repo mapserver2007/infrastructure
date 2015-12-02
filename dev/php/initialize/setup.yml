@@ -3,7 +3,8 @@
   sudo: yes
   user: vagrant
   roles:
-    - common
+    - initialize
+    - application-settings
     - php
     - apache
     - mysql

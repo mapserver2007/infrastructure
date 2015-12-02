@@ -36,7 +36,7 @@
     insertbefore=BOF
     state=present
   with_items:
-    - { regexp: 'host\s+all\s+all\s+127.0.0.1/32\s.+$', line: 'host all all 192.168.0.0/24 md5' }
+    - { regexp: 'host\s+all\s+all\s+127.0.0.1/32\s.+$', line: 'host all all 127.0.0.1/32 md5\nhost all all 192.168.0.0/24 md5' }
     - { regexp: 'local\s+all\s+all\s+peer\s+$', line: 'local all all trust' }
 - name: force restart postgres
   shell: /usr/bin/systemctl restart postgresql-9.4
