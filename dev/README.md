@@ -1,9 +1,20 @@
 # dev
-ホストマシンから直結させた実行環境。  
-テスト環境とは違い、dockerは使用せず、Vagrant上の仮想マシンに環境を作る。  
-`Rsync Synced Folder`によりホストからソースコードを仮想マシンに同期させる。
+
+## Usage
+```bash
+$> vagrant up
+$> vagrant rsync-auto
+```
 
 ## 構成
 * php
-  * 192.168.0.150
-  * PHP7.0 RC7
+    * 192.168.0.150
+    * PHP7.0
+* ruby
+    * 未作成
+* java
+    * 未作成
+* javascript
+    * 未作成
+* csharp
+    * 未作成
