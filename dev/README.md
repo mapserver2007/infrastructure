@@ -11,7 +11,8 @@ $> vagrant rsync-auto
     * 192.168.0.150
     * PHP7.0
 * ruby
-    * 未作成
+    * 192.168.0.151
+    * Ruby2.2.4
 * java
     * 未作成
 * javascript

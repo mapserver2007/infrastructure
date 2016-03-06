@@ -1,0 +1,8 @@
+---
+- hosts: ruby
+  become: yes
+  user: vagrant
+  roles:
+    - initialize
+    - ruby
+    - application-settings

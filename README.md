@@ -1,4 +1,5 @@
 # README
+開発環境、実行環境、テスト環境などのインフラ設定を行う。
 
 ## 設定済み
 ※IPアドレスは仮
@@ -10,9 +11,17 @@
         * 個別の自動テスト
             * webstream-framework
 * dev (192.168.1.6)
-    * 開発実行環境
+    * 開発環境
+        * `vagrant ssh`でログイン
+        * `vagrant rsync-auto`で自動同期
         * ホストから`vagrant rsync`後に動作確認
-            * php
+    * php
+        * PHP7.0
+        * https://github.com/webstream-framework
+    * ruby
+        * Ruby2.2.4
+        * https://github.com/rankforce
+        * https://github.com/mapserver2007/log4ever
 
 ## 未設定
 * web (192.168.1.2)

@@ -1,0 +1,13 @@
+- name: create workspace directory
+  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
+  with_items:
+    - /workspace/
+    - /workspace/rankforce/
+    - /workspace/log4ever/
+  become: yes
+- name: setup rankforce
+  bundler: gemfile="{{ item }}" executable=/usr/local/rbenv/shims/bundle
+  with_items:
+    - /workspace/rankforce/rankforce-daily/Gemfile
+    - /workspace/rankforce/rankforce-nightly/Gemfile
+    - /workspace/log4ever/Gemfile
