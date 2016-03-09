@@ -1,0 +1,6 @@
+- name: create workspace directory
+  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
+  with_items:
+    - /workspace/
+    - /workspace/mika4/
+  become: yes

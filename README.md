@@ -16,12 +16,12 @@
         * `vagrant rsync-auto`で自動同期
         * ホストから`vagrant rsync`後に動作確認
     * php
-        * PHP7.0
         * https://github.com/webstream-framework
     * ruby
-        * Ruby2.2.4
         * https://github.com/rankforce
         * https://github.com/mapserver2007/log4ever
+    * js
+        * https://github.com/mapserver2007/mika4
 
 ## 未設定
 * web (192.168.1.2)

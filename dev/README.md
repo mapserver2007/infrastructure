@@ -16,6 +16,7 @@ $> vagrant rsync-auto
 * java
     * 未作成
 * javascript
-    * 未作成
+    * 192.168.0.152
+    * node v5.7.1
 * csharp
     * 未作成

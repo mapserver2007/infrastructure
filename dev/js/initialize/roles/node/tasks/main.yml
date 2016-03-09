@@ -1,0 +1,8 @@
+- name: install nvm
+  git: repo=git://github.com/creationix/nvm.git dest=/home/vagrant/.nvm
+- name: install npm
+  yum: name=npm state=latest
+- name: set nvm.sh
+  copy: src=nvm.sh dest=/etc/profile.d mode=0775
+- name: install node.js
+  shell: source /etc/profile && nvm install {{ node_version }}
