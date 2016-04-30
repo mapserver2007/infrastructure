@@ -13,4 +13,4 @@
     replace: '<Directory "/workspace">'
 - name: force start httpd
   shell: systemctl start httpd.service
-  sudo: yes
+  become: yes

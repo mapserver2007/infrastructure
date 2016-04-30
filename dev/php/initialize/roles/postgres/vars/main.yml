@@ -1,5 +1,6 @@
 ---
 # postgres
+pg_data_home: /var/lib/pgsql/9.4/data
 postgresql_sqlfile: setup.postgres.sql
 postgresql_userid: postgres
 postgresql_passwd: postgres

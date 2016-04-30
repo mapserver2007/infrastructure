@@ -1,16 +1,20 @@
+# yum repository
 - name: set yum repository
-  yum: name={{ item }}
-  with_items:
-    - http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
-- name: install postgresql
-  yum: name={{ item }} state=latest
-  with_items:
-    - epel-release
-    - postgresql94-server
-    - postgresql94-devel
-    - postgresql94-contrib
-    - python-psycopg2
+  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+# postgres
+- name: install postgresql94-server
+  yum: name=postgresql94-server state=latest
+- name: install postgresql94-devel
+  yum: name=postgresql94-devel state=latest
+- name: install postgresql94-contrib
+  yum: name=postgresql94-contrib state=latest
+- name: install python-psycopg2
+  yum: name=python-psycopg2 state=latest
 # psql -h 192.168.0.150 -U postgres sandbox
+- name: remove database files
+  file: path={{ pg_data_home }} state=absent
+- name: create directory and change permission
+  file: path={{ pg_data_home }} mode=0700 owner=postgres group=postgres state=directory
 - name: copy files
   copy: src={{ item.src }} dest={{ item.dest }}
   with_items:
@@ -18,9 +22,10 @@
       dest: '/home/vagrant/setup/'
 - name: initialize database
   shell: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  become: yes
 - name: postgresql.conf settings
   lineinfile: >-
-    dest=/var/lib/pgsql/9.4/data/postgresql.conf
+    dest={{ pg_data_home }}/postgresql.conf
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
     insertbefore=BOF
@@ -30,21 +35,25 @@
     - { regexp: '#port.*', line: "port = 5432" }
 - name: pg_hba.conf settings
   lineinfile: >-
-    dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+    dest={{ pg_data_home }}/pg_hba.conf
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
     insertbefore=BOF
     state=present
   with_items:
-    - { regexp: 'host\s+all\s+all\s+127.0.0.1/32\s.+$', line: 'host all all 127.0.0.1/32 md5\nhost all all 192.168.0.0/24 md5' }
+    - { regexp: 'host\s+all\s+all\s+127.0.0.1/32\s.+$', line: "host all all 127.0.0.1/32 md5\nhost all all 192.168.0.0/24 md5" }
     - { regexp: 'local\s+all\s+all\s+peer\s+$', line: 'local all all trust' }
-- name: force restart postgres
+- name: daemon reload
+  shell: /usr/bin/systemctl daemon-reload
+- name: force start postgres
   shell: /usr/bin/systemctl restart postgresql-9.4
+  become: yes
 - name: create database
   postgresql_db: name={{ db_name }} state=present
-  sudo_user: "{{ postgresql_userid }}"
+  become_user: "{{ postgresql_userid }}"
 - name: create user
   postgresql_user: db={{ db_name }} name={{ postgresql_userid }} password={{ postgresql_passwd }} priv=ALL state=present
-  sudo_user: "{{ postgresql_userid }}"
+  become_user: "{{ postgresql_userid }}"
 - name: initialize table
   command: /usr/bin/psql -d "{{ db_name }}" -U "{{ postgresql_userid }}" -f "/home/vagrant/setup/{{ postgresql_sqlfile }}"
+  become: yes

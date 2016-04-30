@@ -6,4 +6,4 @@
     - /workspace/webstream-framework/
     - /workspace/webstream-framework/Test/
     - /home/vagrant/setup/
-  sudo: yes
+  become: yes

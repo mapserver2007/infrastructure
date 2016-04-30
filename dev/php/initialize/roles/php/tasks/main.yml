@@ -1,18 +1,23 @@
+# yum repository
 - name: set yum repository
-  yum: name={{ item }}
-  with_items:
-    - http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-7.rpm state=present
+# php
 - name: install php
-  yum: pkg={{ item }} state=latest enablerepo=remi,remi-php70
-  with_items:
-    - php
-    - php-devel
-    - php-mbstring
-    - php-mysql
-    - php-pgsql
-    - php-pdo
-    - php-xml
-    - php-pecl-xdebug
+  yum: name=php state=latest enablerepo=remi,remi-php70
+- name: install php-devel
+  yum: name=php-devel state=latest enablerepo=remi,remi-php70
+- name: install php-mbstring
+  yum: name=php-mbstring state=latest enablerepo=remi,remi-php70
+- name: install php-mysql
+  yum: name=php-mysql state=latest enablerepo=remi,remi-php70
+- name: install php-pgsql
+  yum: name=php-pgsql state=latest enablerepo=remi,remi-php70
+- name: install php-pdo
+  yum: name=php-pdo state=latest enablerepo=remi,remi-php70
+- name: install php-xml
+  yum: name=php-xml state=latest enablerepo=remi,remi-php70
+- name: install php-pecl-xdebug
+  yum: name=php-pecl-xdebug state=latest enablerepo=remi,remi-php70
 - name: php.ini settings
   lineinfile: >-
     dest=/etc/php.ini

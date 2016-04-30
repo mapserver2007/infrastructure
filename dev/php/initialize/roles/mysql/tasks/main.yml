@@ -1,13 +1,11 @@
+# yum repository
 - name: set yum repository
-  yum: name={{ item }}
-  with_items:
-    - http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-- name: install mysql
-  yum: name={{ item }} state=latest
-  with_items:
-    - epel-release
-    - mysql-community-server
-    - MySQL-python
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+# mysql
+- name: install mysql-community-server
+  yum: name=mysql-community-server state=latest
+- name: install MySQL-python
+  yum: name=MySQL-python state=latest
 - name: copy files
   copy: src={{ item.src }} dest={{ item.dest }}
   with_items:
