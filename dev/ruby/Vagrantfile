@@ -44,5 +44,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     group: "vagrant",
     rsync__exclude: ["sandbox/"]
 
+  config.vm.synced_folder "~/Dropbox/workspace/trechin-bot", "/workspace/trechin-bot",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  config.vm.synced_folder "~/Dropbox/workspace/trechin-web", "/workspace/trechin-web",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  config.vm.synced_folder "~/Dropbox/workspace/mika4-tumblr-auto-update", "/workspace/mika4-tumblr-auto-update",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
   config.ssh.pty = true
 end

@@ -1,6 +1,9 @@
 - name: install ruby
   yum: name=ruby state=latest
   become: yes
+- name: install ruby-devel
+  yum: name=ruby state=latest
+  become: yes
 - name: install rbenv
   git: repo=https://github.com/sstephenson/rbenv.git dest={{ rbenv_root }}
   become: yes

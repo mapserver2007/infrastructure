@@ -4,6 +4,9 @@
     - /workspace/
     - /workspace/rankforce/
     - /workspace/log4ever/
+    - /workspace/trechin-bot/
+    - /workspace/trechin-web/
+    - /workspace/mika4-tumblr-auto-update/
   become: yes
 - name: setup rankforce
   bundler: gemfile="{{ item }}" executable=/usr/local/rbenv/shims/bundle
