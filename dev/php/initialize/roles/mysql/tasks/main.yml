@@ -1,6 +1,6 @@
 # yum repository
 - name: set yum repository
-  yum: name=http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm state=present
 # mysql
 - name: install mysql-community-server
   yum: name=mysql-community-server state=latest
