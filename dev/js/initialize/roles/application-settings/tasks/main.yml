@@ -3,4 +3,5 @@
   with_items:
     - /workspace/
     - /workspace/mika4/
+    - /workspace/mika4-line/
   become: yes

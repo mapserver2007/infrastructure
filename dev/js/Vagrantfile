@@ -23,6 +23,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "~/Dropbox/workspace/mika4", "/workspace/mika4",
     type: "rsync",
     owner: "vagrant",
+    group: "vagrant",
+    rsync__exclude: [".git/", "scripts/", "node_modules/"]
+
+  config.vm.synced_folder "~/Dropbox/workspace/mika4-line", "/workspace/mika4-line",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant",
+    rsync__exclude: [".git/", "scripts/", "node_modules/"]
+
+  config.vm.synced_folder "~/Dropbox/workspace/mika4-scripts", "/workspace/mika4/scripts",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  config.vm.synced_folder "~/Dropbox/workspace/mika4-scripts", "/workspace/mika4-line/scripts",
+    type: "rsync",
+    owner: "vagrant",
     group: "vagrant"
 
   config.ssh.pty = true
