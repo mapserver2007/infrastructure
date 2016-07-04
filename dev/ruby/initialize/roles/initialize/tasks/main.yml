@@ -30,6 +30,10 @@
   yum: name=libxml2-devel state=latest
 - name: install libxslt-devel
   yum: name=libxslt-devel state=latest
+- name: install libffi-devel
+  yum: name=libffi-devel state=latest
+- name: install openssl-devel
+  yum: name=openssl-devel state=latest
 - name: install ansible
   pip: name=ansible state=latest
 - name: change timezone
