@@ -1,9 +1,9 @@
-sandbox/
 .vagrant
+.DS_Store
+setup.retry
+sandbox
 
 # ci
 ci/secret_keys/**/*.yml
 ci/jenkins_backup/*
 !ci/jenkins_backup/.gitkeep
-
-# dev

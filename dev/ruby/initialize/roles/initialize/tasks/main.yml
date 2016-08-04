@@ -14,14 +14,10 @@
   yum: name=python-devel state=latest
 - name: install python-setuptools
   yum: name=python-setuptools state=latest
-- name: install python-pip
-  yum: name=python-pip state=latest
 - name: install libselinux-python
   yum: name=libselinux-python state=latest
 - name: install ld-linux.so.2
   yum: name=ld-linux.so.2 state=latest
-- name: install openssl-devel
-  yum: name=openssl-devel state=latest
 - name: install readline-devel
   yum: name=readline-devel state=latest
 - name: install zlib-devel
@@ -34,8 +30,19 @@
   yum: name=libffi-devel state=latest
 - name: install openssl-devel
   yum: name=openssl-devel state=latest
-- name: install ansible
-  pip: name=ansible state=latest
+- name: compile openssl
+  shell: >-
+    /usr/bin/wget https://www.openssl.org/source/openssl-{{ openssl_version }}.tar.gz &&
+    /usr/bin/tar -zxf openssl-{{ openssl_version }}.tar.gz &&
+    cd openssl-{{ openssl_version }} &&
+    ./config &&
+    make
+- name: install openssl
+  shell: >-
+    cd openssl-{{ openssl_version }} &&
+    make install &&
+    ln -nfs /usr/local/ssl/bin/openssl /usr/bin/openssl
+  become: yes
 - name: change timezone
   copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
   become: yes

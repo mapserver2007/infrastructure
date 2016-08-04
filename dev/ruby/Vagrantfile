@@ -5,9 +5,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "ruby" do |node|
-    node.vm.box = "bento/centos-7.1"
+    node.vm.box = "bento/centos-7.2"
     node.vm.hostname = "ruby"
-    node.vm.network :public_network, ip: "192.168.0.151", bridge: "en1: Wi-Fi (AirPort)"
+    node.vm.network :public_network, ip: "192.168.0.152", bridge: "en1: Wi-Fi (AirPort)"
     node.vm.network :forwarded_port, guest: 22, host: 2253, id: "ssh"
   end
 
@@ -19,24 +19,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
   end
-
-  config.vm.synced_folder "~/Dropbox/workspace/rankforce", "/workspace/rankforce",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant",
-    rsync__exclude: ["sandbox/", "infrastructure/", "rankforce-daily/core", "rankforce-nightly/core", "rankforce-old"]
-
-  config.vm.synced_folder "~/Dropbox/workspace/rankforce/rankforce-core", "/workspace/rankforce/rankforce-daily/core",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant",
-    rsync__exclude: [".git/", "sandbox/"]
-
-  config.vm.synced_folder "~/Dropbox/workspace/rankforce/rankforce-core", "/workspace/rankforce/rankforce-nightly/core",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant",
-    rsync__exclude: [".git/", "sandbox/"]
 
   config.vm.synced_folder "~/Dropbox/workspace/log4ever", "/workspace/log4ever",
     type: "rsync",

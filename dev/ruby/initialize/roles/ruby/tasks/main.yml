@@ -2,7 +2,7 @@
   yum: name=ruby state=latest
   become: yes
 - name: install ruby-devel
-  yum: name=ruby state=latest
+  yum: name=ruby-devel state=latest
   become: yes
 - name: install rbenv
   git: repo=https://github.com/sstephenson/rbenv.git dest={{ rbenv_root }}
@@ -13,20 +13,28 @@
 - name: install ruby-gem-rehash
   git: repo=https://github.com/sstephenson/rbenv-gem-rehash.git dest={{ rbenv_root }}/plugins/rbenv-gem-rehash.git
   become: yes
-- name: set rbenv env file
-  copy: src=rbenv.sh dest=/etc/profile.d mode=0775
-  become: yes
-- name: set heroku env file
-  copy: src=heroku.sh dest=/etc/profile.d mode=0775
+- name: copy files
+  copy: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  with_items:
+    - src: 'rbenv.sh'
+      dest: '/etc/profile.d'
+      mode: '0775'
+    - src: 'heroku.sh'
+      dest: '/etc/profile.d'
+      mode: '0775'
+    - src: 'Gemfile'
+      dest: '/home/vagrant/'
+      mode: '0644'
   become: yes
 - name: install ruby with rbenv
   shell: bash -lc "CONFIGURE_OPTS="--disable-install-rdoc" rbenv install {{ ruby_version }}"
 - name: "set ruby {{ ruby_version }} for system"
   shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
-- name: install gems
+- name: install bundler
   shell: bash -lc "gem install {{ item }}"
   with_items:
     - bundler
-    - rspec
+- name: install gem for development
+  bundler: gemfile=Gemfile executable=/usr/local/rbenv/shims/bundle
 - name: install heroku
   shell: bash -lc "wget -qO- https://toolbelt.heroku.com/install.sh | sh"
