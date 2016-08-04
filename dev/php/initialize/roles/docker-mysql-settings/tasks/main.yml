@@ -1,2 +1,0 @@
-- name: file copy for mysql
-  copy: src=hoge.txt dest=/tmp/
