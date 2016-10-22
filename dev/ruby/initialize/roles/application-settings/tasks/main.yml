@@ -5,9 +5,12 @@
     - /workspace/log4ever/
     - /workspace/trechin-bot/
     - /workspace/trechin-web/
-    - /workspace/mika4-tumblr-auto-update/
+    - /workspace/rumble-crawler/
+    - /workspace/rumble-server/
   become: yes
-- name: setup rankforce
+- name: setup gems
   bundler: gemfile="{{ item }}" executable=/usr/local/rbenv/shims/bundle
   with_items:
     - /workspace/log4ever/Gemfile
+    - /workspace/rumble-server/Gemfile
+    - /workspace/rumble-crawler/Gemfile

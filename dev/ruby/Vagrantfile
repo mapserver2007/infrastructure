@@ -20,6 +20,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
+  config.vm.boot_timeout = 120
+
   config.vm.synced_folder "~/Dropbox/workspace/log4ever", "/workspace/log4ever",
     type: "rsync",
     owner: "vagrant",
@@ -36,7 +38,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     owner: "vagrant",
     group: "vagrant"
 
-  config.vm.synced_folder "~/Dropbox/workspace/mika4-tumblr-auto-update", "/workspace/mika4-tumblr-auto-update",
+  config.vm.synced_folder "~/Dropbox/workspace/rumble-crawler", "/workspace/rumble-crawler",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  config.vm.synced_folder "~/Dropbox/workspace/rumble-server", "/workspace/rumble-server",
     type: "rsync",
     owner: "vagrant",
     group: "vagrant"
