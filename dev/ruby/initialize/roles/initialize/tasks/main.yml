@@ -28,6 +28,8 @@
   yum: name=libxslt-devel state=latest
 - name: install libffi-devel
   yum: name=libffi-devel state=latest
+- name: install libcurl-devel
+  yum: name=libcurl-devel state=latest
 - name: install openssl-devel
   yum: name=openssl-devel state=latest
 - name: compile openssl

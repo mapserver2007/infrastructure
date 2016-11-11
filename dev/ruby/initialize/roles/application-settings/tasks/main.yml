@@ -3,10 +3,9 @@
   with_items:
     - /workspace/
     - /workspace/log4ever/
-    - /workspace/trechin-bot/
-    - /workspace/trechin-web/
     - /workspace/rumble-crawler/
     - /workspace/rumble-server/
+    - /workspace/rumble-notify/
   become: yes
 - name: setup gems
   bundler: gemfile="{{ item }}" executable=/usr/local/rbenv/shims/bundle
@@ -14,3 +13,4 @@
     - /workspace/log4ever/Gemfile
     - /workspace/rumble-server/Gemfile
     - /workspace/rumble-crawler/Gemfile
+    - /workspace/rumble-notify/Gemfile
