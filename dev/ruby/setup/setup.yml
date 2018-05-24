@@ -1,5 +1,5 @@
 ---
-- hosts: ruby
+- hosts: dev-ruby
   become: yes
   user: vagrant
   roles:

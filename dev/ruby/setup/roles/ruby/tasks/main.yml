@@ -27,14 +27,14 @@
       mode: '0644'
   become: yes
 - name: install ruby with rbenv
-  shell: bash -lc "CONFIGURE_OPTS="--disable-install-rdoc" rbenv install {{ ruby_version }}"
-- name: "set ruby {{ ruby_version }} for system"
-  shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
+  shell: bash -lc "CONFIGURE_OPTS="--disable-install-rdoc" rbenv install {{ default_ruby_version }}"
+- name: "set ruby {{ default_ruby_version }} for system"
+  shell: bash -lc "rbenv global {{ default_ruby_version }} && rbenv rehash"
 - name: install bundler
   shell: bash -lc "gem install {{ item }}"
   with_items:
     - bundler
 - name: install gem for development
-  bundler: gemfile=Gemfile executable=/usr/local/rbenv/shims/bundle
+  bundler: gemfile=/home/vagrant/Gemfile executable=/usr/local/rbenv/shims/bundle
 - name: install heroku
   shell: bash -lc "wget -qO- https://toolbelt.heroku.com/install.sh | sh"

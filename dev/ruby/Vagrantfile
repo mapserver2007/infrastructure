@@ -2,46 +2,65 @@
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
+VAGRANT_DOTFILE_PATH = /darwin/ =~ RUBY_PLATFORM ? ".vagrant" : ".vagrant-sub"
+currpath = ENV['VAGRANT_DOTFILE_PATH'] || '.vagrant'
+if currpath != VAGRANT_DOTFILE_PATH
+  ENV['VAGRANT_DOTFILE_PATH'] = VAGRANT_DOTFILE_PATH
+  args = ARGV.join(' ')
+  system "vagrant #{args}"
+  FileUtils.rm_r(currpath)
+  abort 'Finished'
+end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.define "ruby" do |node|
-    node.vm.box = "bento/centos-7.2"
-    node.vm.hostname = "ruby"
-    node.vm.network :public_network, ip: "192.168.0.152", bridge: "en1: Wi-Fi (AirPort)"
-    node.vm.network :forwarded_port, guest: 22, host: 2253, id: "ssh"
+  settings = {}
+  if /darwin/ =~ RUBY_PLATFORM # macos
+    settings[:ipaddr] = "192.168.0.152"
+    settings[:port] = 2252
+    settings[:workspace_path] = "~/Dropbox/workspace/"
+  else # windows
+    settings[:ipaddr] = "192.168.0.153"
+    settings[:port] = 2253
+    settings[:workspace_path] = "/Users/tanak/Dropbox/workspace/"
   end
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = "initialize/setup.yml"
-    ansible.host_key_checking = false
+  config.vm.define "dev-ruby" do |node|
+    node.vm.box = "bento/centos-7.4"
+    node.vm.hostname = "dev-ruby"
+    node.vm.network :public_network, ip: "192.168.0.152", bridge: "en1: Wi-Fi (AirPort)"
+    node.vm.network :forwarded_port, guest: 22, host: 2253, id: "ssh"
   end
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
+  config.vm.synced_folder "setup", "/vagrant",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  apps = [
+    'log4ever',
+    'rumble-crawler',
+    'rumble-server',
+    'rumble-notify'
+  ]
+
+  apps.each do |repository|
+    config.vm.synced_folder settings[:workspace_path] + repository, "/workspace/" + repository,
+      type: "rsync",
+      owner: "vagrant",
+      group: "vagrant",
+      rsync__exclude: [".git/", "sandbox/"]
+  end
+
   config.vm.boot_timeout = 120
 
-  config.vm.synced_folder "~/Dropbox/workspace/log4ever", "/workspace/log4ever",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant",
-    rsync__exclude: ["sandbox/"]
-
-  config.vm.synced_folder "~/Dropbox/workspace/rumble-crawler", "/workspace/rumble-crawler",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant"
-
-  config.vm.synced_folder "~/Dropbox/workspace/rumble-server", "/workspace/rumble-server",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant"
-
-  config.vm.synced_folder "~/Dropbox/workspace/rumble-notify", "/workspace/rumble-notify",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant"
+  config.vm.provision :ansible_local do |ansible|
+    ansible.compatibility_mode = '2.0'
+    ansible.playbook = "setup.yml"
+  end
 
   config.ssh.pty = true
 end
