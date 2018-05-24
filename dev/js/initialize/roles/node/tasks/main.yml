@@ -6,3 +6,5 @@
   copy: src=nvm.sh dest=/etc/profile.d mode=0775
 - name: install node.js
   shell: source /etc/profile && nvm install {{ node_version }}
+- name: install npm package
+  npm: path=/workspace/jsonpeteer

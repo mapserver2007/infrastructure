@@ -1,0 +1,13 @@
+- name: copy repository config
+  copy: src=google.chrome.repo dest=/etc/yum.repos.d/
+- name: install chrome
+  yum: name=google-chrome-stable state=latest
+- name: install font
+  yum: name={{ item }} state=latest
+  with_items:
+    - ipa-gothic-fonts
+    - ipa-mincho-fonts
+    - ipa-pgothic-fonts
+    - ipa-pmincho-fonts
+- name: cache clear
+  shell: fc-cache -vf

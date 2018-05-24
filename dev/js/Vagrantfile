@@ -5,40 +5,29 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "js" do |node|
-    node.vm.box = "bento/centos-7.1"
+    node.vm.box = "bento/centos-7.4"
     node.vm.hostname = "js"
     node.vm.network :public_network, ip: "192.168.0.152", bridge: "en1: Wi-Fi (AirPort)"
     node.vm.network :forwarded_port, guest: 22, host: 2254, id: "ssh"
   end
 
   config.vm.provision :ansible do |ansible|
+    ansible.compatibility_mode = '2.0'
     ansible.playbook = "initialize/setup.yml"
-    ansible.host_key_checking = false
   end
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
-  config.vm.synced_folder "~/Dropbox/workspace/mika4", "/workspace/mika4",
+  config.vm.synced_folder "~/Dropbox/workspace/jsonpeteer", "/workspace/jsonpeteer",
     type: "rsync",
     owner: "vagrant",
     group: "vagrant",
-    rsync__exclude: [".git/", "scripts/", "node_modules/"]
+    rsync__exclude: [".git/", "scripts/", "node_modules/", "sandbox"]
 
-  config.vm.synced_folder "~/Dropbox/workspace/mika4-line", "/workspace/mika4-line",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant",
-    rsync__exclude: [".git/", "scripts/", "node_modules/"]
-
-  config.vm.synced_folder "~/Dropbox/workspace/mika4-scripts", "/workspace/mika4/scripts",
-    type: "rsync",
-    owner: "vagrant",
-    group: "vagrant"
-
-  config.vm.synced_folder "~/Dropbox/workspace/mika4-scripts", "/workspace/mika4-line/scripts",
-    type: "rsync",
+  config.vm.synced_folder "~/Dropbox/workspace/jsonpeteer/sandbox", "/workspace/jsonpeteer/sandbox",
+    type: "virtualbox",
     owner: "vagrant",
     group: "vagrant"
 
