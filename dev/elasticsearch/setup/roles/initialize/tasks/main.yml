@@ -1,0 +1,6 @@
+# yum package update
+- name: yum update
+  shell: yum update -y
+  become: yes
+- name: set yum repository
+  rpm_key: key=https://artifacts.elastic.co/GPG-KEY-elasticsearch state=present

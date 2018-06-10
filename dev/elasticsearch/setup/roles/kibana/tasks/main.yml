@@ -1,0 +1,14 @@
+- name: copy repository config
+  copy: src=kibana.repo dest=/etc/yum.repos.d/ mode=0644
+- name: install kibana
+  yum: name=kibana state=latest
+- name: config settings
+  replace: >-
+    dest=/etc/kibana/kibana.yml
+    regexp='{{ item.regexp }}'
+    replace='{{ item.replace }}'
+  with_items:
+  - regexp: '#server.host:.+'
+    replace: 'server.host: 0.0.0.0'
+- name: start elasticsearch
+  service: name=kibana state=started enabled=yes

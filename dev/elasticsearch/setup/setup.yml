@@ -1,0 +1,9 @@
+---
+- hosts: dev-elasticsearch
+  become: yes
+  user: vagrant
+  roles:
+    - initialize
+    - java
+    - elasticsearch
+    - kibana

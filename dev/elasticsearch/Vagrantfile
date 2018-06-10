@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "dev-elasticsearch" do |node|
+    node.vm.box = "bento/centos-7.4"
+    node.vm.hostname = "dev-elasticsearch"
+    node.vm.network :public_network, ip: "192.168.0.160", bridge: "en1: Wi-Fi (AirPort)"
+    node.vm.network :forwarded_port, guest: 22, host: 2260, id: "ssh"
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 2048]
+  end
+
+  config.vm.synced_folder "setup", "/vagrant",
+    type: "rsync",
+    owner: "vagrant",
+    group: "vagrant"
+
+  apps = [
+    'elastic-lifelog'
+  ]
+
+  apps.each do |repository|
+    config.vm.synced_folder "~/Dropbox/workspace/" + repository, "/workspace/" + repository,
+      type: "rsync",
+      owner: "vagrant",
+      group: "vagrant",
+      rsync__exclude: [".git/", "sandbox/"]
+  end
+
+  config.vm.boot_timeout = 120
+
+  config.vm.provision :ansible_local do |ansible|
+    ansible.compatibility_mode = '2.0'
+    ansible.playbook = "setup.yml"
+  end
+
+  config.ssh.pty = true
+end
