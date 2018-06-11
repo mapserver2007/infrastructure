@@ -1,0 +1,8 @@
+- name: install elasticsearch plugins
+  become: yes
+  command: "{{es_home}}/bin/elasticsearch-plugin install {{ item }} --batch --silent"
+  register: plugin_installed
+  failed_when: "'ERROR' in plugin_installed.stdout"
+  changed_when: plugin_installed.rc == 0
+  with_items:
+    - analysis-kuromoji

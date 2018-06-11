@@ -6,4 +6,6 @@
     - initialize
     - java
     - elasticsearch
+    - elasticsearch-plugin
     - kibana
+    - logstash

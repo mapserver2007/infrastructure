@@ -1,0 +1,6 @@
+- name: copy repository config
+  copy: src=logstash.repo dest=/etc/yum.repos.d/ mode=0644
+- name: install Logstash
+  yum: name=logstash state=present
+- name: enable Logstash
+  service: name=logstash state=started enabled=yes

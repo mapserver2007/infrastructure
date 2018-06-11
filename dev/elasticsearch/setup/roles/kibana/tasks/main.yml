@@ -10,5 +10,7 @@
   with_items:
   - regexp: '#server.host:.+'
     replace: 'server.host: 0.0.0.0'
+  - regexp: '#elasticsearch.url:.+'
+    replace: 'elasticsearch.url: "http://localhost:9200"'
 - name: start elasticsearch
   service: name=kibana state=started enabled=yes
