@@ -1,0 +1,7 @@
+- name: install logstash plugins
+  become: yes
+  command: "{{ls_home}}/bin/logstash-plugin install {{ item }}"
+  register: plugin_installed
+  with_items:
+    - logstash-filter-csv
+    - logstash-filter-mutate
