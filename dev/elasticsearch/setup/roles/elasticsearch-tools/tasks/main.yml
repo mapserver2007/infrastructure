@@ -1,0 +1,3 @@
+# elasticsearch-dump
+- name: install npm package "elasticsearch-dump"
+  npm: name=elasticdump global=yes

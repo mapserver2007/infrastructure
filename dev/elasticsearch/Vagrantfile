@@ -32,6 +32,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       rsync__exclude: [".git/", "sandbox/"]
   end
 
+  data_dir = [
+    "runkeeper/data"
+  ]
+
+  data_dir.each do |path|
+    config.vm.synced_folder "~/Dropbox/workspace/elastic-lifelog/#{path}", "/workspace/elastic-lifelog/#{path}",
+    type: "virtualbox",
+    owner: "vagrant",
+    group: "vagrant"
+  end
+
   config.vm.boot_timeout = 120
 
   config.vm.provision :ansible_local do |ansible|
