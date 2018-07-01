@@ -44,7 +44,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     'log4ever',
     'rumble-crawler',
     'rumble-server',
-    'rumble-notify'
+    'rumble-notify',
+    'elastic-lifelog'
   ]
 
   apps.each do |repository|
@@ -53,6 +54,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       owner: "vagrant",
       group: "vagrant",
       rsync__exclude: [".git/", "sandbox/"]
+  end
+
+  data_dir = [
+    "runkeeper/data",
+    "fitbit/data",
+    "withings/data",
+    "lastfm/data"
+  ]
+
+  data_dir.each do |path|
+    config.vm.synced_folder "~/Dropbox/workspace/elastic-lifelog/#{path}", "/workspace/elastic-lifelog/#{path}",
+    type: "virtualbox",
+    owner: "vagrant",
+    group: "vagrant"
   end
 
   config.vm.boot_timeout = 120

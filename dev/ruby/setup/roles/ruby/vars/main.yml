@@ -1,5 +1,5 @@
 ---
-default_ruby_version: 2.3.6
+default_ruby_version: 2.4.3
 ruby_versions:
   - 2.3.6
   - 2.4.3
