@@ -33,7 +33,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   data_dir = [
-    "runkeeper/data"
+    "runkeeper/data",
+    "fitbit/data",
+    "withings/data",
+    "lastfm/data"
   ]
 
   data_dir.each do |path|
