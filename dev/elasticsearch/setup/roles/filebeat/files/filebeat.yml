@@ -1,0 +1,8 @@
+filebeat.prospectors:
+- input_type: log
+  registry_file: /var/lib/filebeat/registry
+  document_type: withings
+  paths:
+    - /workspace/elastic-lifelog/withings/data/withings_export.csv
+output.logstash:
+  hosts: ["localhost:5044"]

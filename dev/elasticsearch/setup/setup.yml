@@ -11,3 +11,4 @@
     - kibana
     - logstash
     - logstash-plugin
+    - filebeat

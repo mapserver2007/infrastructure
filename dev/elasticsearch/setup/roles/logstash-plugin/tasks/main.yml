@@ -4,6 +4,7 @@
   register: plugin_installed
   with_items:
     - logstash-input-file
+    - logstash-input-beats
     - logstash-filter-grok
     - logstash-filter-csv
     - logstash-filter-mutate
