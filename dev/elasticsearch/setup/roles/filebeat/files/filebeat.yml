@@ -1,8 +1,39 @@
-filebeat.prospectors:
-- input_type: log
-  registry_file: /var/lib/filebeat/registry
-  document_type: withings
-  paths:
-    - /workspace/elastic-lifelog/withings/data/withings_export.csv
+filebeat:
+  prospectors:
+  - input_type: log
+    registry_file: /var/lib/filebeat/registry
+    scan_frequency: 30s
+    fields:
+      type: withings
+    paths:
+      - /workspace/elastic-lifelog/withings/data/withings_export.csv
+  - input_type: log
+    registry_file: /var/lib/filebeat/registry
+    scan_frequency: 30s
+    fields:
+      type: runkeeper
+    paths:
+      - /workspace/elastic-lifelog/runkeeper/data/runkeeper_export.csv
+  - input_type: log
+    registry_file: /var/lib/filebeat/registry
+    scan_frequency: 30s
+    fields:
+      type: fitbit
+    paths:
+      - /workspace/elastic-lifelog/fitbit/data/fitbit_export.csv
+  - input_type: log
+    registry_file: /var/lib/filebeat/registry
+    scan_frequency: 30s
+    fields:
+      type: lastfm_artist
+    paths:
+      - /workspace/elastic-lifelog/lastfm/data/lastfm_artist_export.csv
+  - input_type: log
+    registry_file: /var/lib/filebeat/registry
+    scan_frequency: 30s
+    fields:
+      type: lastfm_track
+    paths:
+      - /workspace/elastic-lifelog/lastfm/data/lastfm_track_export.csv
 output.logstash:
   hosts: ["localhost:5044"]
