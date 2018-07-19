@@ -9,6 +9,6 @@
     - elasticsearch-plugin
     - elasticsearch-tools
     - kibana
+    - filebeat
     - logstash
     - logstash-plugin
-    - filebeat

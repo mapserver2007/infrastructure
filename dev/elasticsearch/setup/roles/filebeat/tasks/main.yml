@@ -2,5 +2,9 @@
   copy: src=filebeat.repo dest=/etc/yum.repos.d/ mode=0644
 - name: install filebeat
   yum: name=filebeat state=latest
+- name: config file setting
+  copy: src=filebeat.yml dest=/etc/filebeat
+- name: restart service
+  service: name=filebeat state=restarted
 - name: beat to start automatically during boot
   shell: chkconfig --add filebeat
