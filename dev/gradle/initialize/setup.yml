@@ -1,6 +1,0 @@
----
-- hosts: gradle
-  become: yes
-  user: vagrant
-  roles:
-    - initialize
