@@ -1,0 +1,6 @@
+---
+- hosts: dev-docker
+  become: yes
+  user: vagrant
+  roles:
+    - initialize
