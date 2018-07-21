@@ -6,13 +6,6 @@
     - /workspace/rumble-crawler/
     - /workspace/rumble-server/
     - /workspace/rumble-notify/
-    - /workspace/elastic-lifelog/
   become: yes
-# - name: setup gems
-#   bundler: gemfile="{{ item }}" executable=/usr/local/rbenv/shims/bundle
-#   with_items:
-    # - /workspace/log4ever/Gemfile
-    # - /workspace/rumble-server/Gemfile
-    # - /workspace/rumble-crawler/Gemfile
-    # - /workspace/rumble-notify/Gemfile
-    # - /workspace/elastic-lifelog/Gemfile
+
+- import_tasks: elastic-lifelog.yml

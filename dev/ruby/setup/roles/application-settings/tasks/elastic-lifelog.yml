@@ -1,0 +1,11 @@
+- name: create workspace directory
+  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
+  with_items:
+    - /workspace/elastic-lifelog/
+- name: setup gems
+  bundler: gemfile="/workspace/elastic-lifelog/{{ item }}/Gemfile" executable=/usr/local/rbenv/shims/bundle
+  with_items:
+    - fitbit
+    - lastfm
+    - runkeeper
+    - withings

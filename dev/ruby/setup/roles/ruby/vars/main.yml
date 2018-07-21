@@ -1,7 +1,7 @@
 ---
-default_ruby_version: 2.4.3
+default_ruby_version: 2.5.1
 ruby_versions:
-  - 2.3.6
-  - 2.4.3
-  - 2.5.0
+  - 2.3.7
+  - 2.4.4
+  - 2.5.1
 rbenv_root: /usr/local/rbenv
