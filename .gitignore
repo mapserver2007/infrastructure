@@ -1,4 +1,5 @@
 .vagrant
+.vagrant-sub
 .DS_Store
 setup.retry
 sandbox
@@ -7,3 +8,6 @@ sandbox
 ci/secret_keys/**/*.yml
 ci/jenkins_backup/*
 !ci/jenkins_backup/.gitkeep
+
+# dev
+dev/docker/syncfiles/docker-elastic-lifelog/secrets/**/*.yml
