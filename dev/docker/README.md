@@ -25,7 +25,7 @@ ElasticSearch/LogStash/Kibana/FileBeatの環境を構築する。
 $> sudo docker-compose up -d
 ```
 
-コンテナが起動すると以下のようになる。
+コンテナが起動すると以下のようになる。
 
 ```
 [vagrant@dev-docker docker-elk]$ sudo docker ps
