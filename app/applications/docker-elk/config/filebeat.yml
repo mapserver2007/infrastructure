@@ -1,0 +1,39 @@
+filebeat:
+  prospectors:
+  - input_type: log
+    registry_file: /usr/share/filebeat/data/registry
+    scan_frequency: 30s
+    fields:
+      type: withings
+    paths:
+      - /usr/share/filebeat/import_data/withings_export.csv
+  - input_type: log
+    registry_file: /usr/share/filebeat/data/registry
+    scan_frequency: 30s
+    fields:
+      type: runkeeper
+    paths:
+      - /usr/share/filebeat/import_data/runkeeper_export.csv
+  - input_type: log
+    registry_file: /usr/share/filebeat/data/registry
+    scan_frequency: 30s
+    fields:
+      type: fitbit
+    paths:
+      - /usr/share/filebeat/import_data/fitbit_export.csv
+  - input_type: log
+    registry_file: /usr/share/filebeat/data/registry
+    scan_frequency: 30s
+    fields:
+      type: lastfm_artist
+    paths:
+      - /usr/share/filebeat/import_data/lastfm_artist_export.csv
+  - input_type: log
+    registry_file: /usr/share/filebeat/data/registry
+    scan_frequency: 30s
+    fields:
+      type: lastfm_track
+    paths:
+      - /usr/share/filebeat/import_data/lastfm_track_export.csv
+output.logstash:
+  hosts: ["logstash:5044"]

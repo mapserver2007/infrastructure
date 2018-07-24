@@ -9,5 +9,8 @@ ci/secret_keys/**/*.yml
 ci/jenkins_backup/*
 !ci/jenkins_backup/.gitkeep
 
+# app
+app/applications/docker-elastic-lifelog/secrets/**/*.yml
+
 # dev
 dev/docker/syncfiles/docker-elastic-lifelog/secrets/**/*.yml

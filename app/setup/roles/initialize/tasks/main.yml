@@ -1,0 +1,23 @@
+- name: yum update
+  yum: name=* state=latest
+- name: install python-devel
+  yum: name=python-devel state=latest
+- name: install python-pip
+  yum: name=python-pip state=latest
+- name: update pip
+  shell: pip install --upgrade pip
+- name: install python-setuptools
+  yum: name=python-setuptools state=latest
+  # docker
+- name: set docker repository
+  copy: src=docker.repo dest=/etc/yum.repos.d/
+- name: install docker
+  yum: name=docker-engine state=latest
+- name: install docker-compose
+  pip: name=docker-compose state=latest
+- name: restart docker
+  service: name=docker state=restarted
+# config
+- name: change timezone
+  copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
+  become: yes
