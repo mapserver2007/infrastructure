@@ -1,0 +1,2 @@
+- name: clone jenkins backup script
+  git: repo=https://github.com/sue445/jenkins-backup-script.git dest=/workspace/docker-jenkins/jenkins-backup-script

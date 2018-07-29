@@ -26,6 +26,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     group: "vagrant",
     rsync__exclude: [".git/", "sandbox/"]
 
+  config.vm.synced_folder "~/Dropbox/workspace/infrastructure/dev/docker/syncfiles/backupfiles", "/workspace/backupfiles",
+    type: "virtualbox",
+    owner: "vagrant",
+    group: "vagrant"
+
   config.vm.boot_timeout = 120
 
   config.vm.provision :ansible_local do |ansible|

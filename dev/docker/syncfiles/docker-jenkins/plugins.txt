@@ -1,0 +1,6 @@
+git
+github
+thinBackup
+docker
+simple-theme-plugin
+matrix-auth
