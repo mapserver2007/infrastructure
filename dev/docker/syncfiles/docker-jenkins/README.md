@@ -9,7 +9,7 @@ vagrant@dev-docker> docker-compose up -d
 ## 設定バックアップ
 
 ```
-vagrant@dev-docker> docker exec -it docker-jenkins_main_1 bash
+vagrant@dev-docker> docker exec -it jenkins bash
 $> cd /tmp
 $> ./jenkins-backup.sh $JENKINS_HOME /tmp/backup/jenkins-backup.tar.gz
 ```
@@ -18,7 +18,7 @@ $> ./jenkins-backup.sh $JENKINS_HOME /tmp/backup/jenkins-backup.tar.gz
 
 ```
 -- in docker container
-vagrant@dev-docker> docker exec -it docker-jenkins_main_1 bash
+vagrant@dev-docker> docker exec -it jenkins bash
 $> cp /tmp/backup/jenkins-backup.tar.gz /tmp
 $> cd /tmp
 $> tar xzf jenkins-backup.tar.gz
