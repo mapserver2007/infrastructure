@@ -1,8 +1,0 @@
----
-- hosts: ci
-  sudo: yes
-  user: vagrant
-  roles:
-    - common
-    - jenkins
-    - jenkins-plugin

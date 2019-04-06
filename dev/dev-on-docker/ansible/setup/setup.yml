@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  become: yes
+  user: dev
+  roles:
+    - initialize
+    - nginx
+    - php
+    # - apache
+    # - mysql
+    # - postgres
+    # - sqlite
+    # - docker
+    # - application-settings

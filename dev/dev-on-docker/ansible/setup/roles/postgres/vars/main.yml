@@ -1,0 +1,7 @@
+---
+# postgres
+pg_data_home: /var/lib/pgsql/9.6/data
+postgresql_sqlfile: setup.postgres.sql
+postgresql_userid: postgres
+postgresql_passwd: postgres
+db_name: sandbox

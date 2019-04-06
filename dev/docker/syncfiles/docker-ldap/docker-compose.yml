@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  openldap:
+    image: osixia/openldap
+    container_name: openldap
+    environment:
+      LDAP_DOMAIN: "ldap.summer-lights.jp"
+      LDAP_ADMIN_PASSWORD: "admin"
+    ports:
+      - 389:389
+      - 636:636
+
+  phpldapadmin:
+    image: osixia/phpldapadmin
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8081:80"
+    depends_on:
+      - openldap

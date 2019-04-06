@@ -1,0 +1,8 @@
+---
+- hosts: ci
+  become: yes
+  user: vagrant
+  roles:
+    - initialize
+    - java
+    - jenkins

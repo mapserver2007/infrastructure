@@ -5,7 +5,6 @@ services:
     container_name: jenkins
     volumes:
       - ../backupfiles/jenkins:/tmp/backup
-
     ports:
       - 8080:8080
       - 50000:50000

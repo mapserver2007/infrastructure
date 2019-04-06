@@ -1,0 +1,5 @@
+---
+sqlite_download_url: http://www.sqlite.org/2018/
+sqlite_archive_name: sqlite-tools-linux-x86-3220000
+sqlite_sqlfile: setup.sqlite.sql
+db_name: sandbox

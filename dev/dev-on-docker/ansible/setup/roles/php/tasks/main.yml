@@ -1,0 +1,100 @@
+# yum repository
+- name: set yum repository(remi)
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-7.rpm state=present
+- name: set yum repository(epel)
+  yum: name=https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm state=present
+# php
+- name: install php
+  yum: name=php state=latest enablerepo=remi,remi-php72
+- name: install php-devel
+  yum: name=php-devel state=latest enablerepo=remi,remi-php72
+- name: install php-mbstring
+  yum: name=php-mbstring state=latest enablerepo=remi,remi-php72
+- name: install php-mysql
+  yum: name=php-mysql state=latest enablerepo=remi,remi-php72
+- name: install php-pgsql
+  yum: name=php-pgsql state=latest enablerepo=remi,remi-php72
+- name: install php-pdo
+  yum: name=php-pdo state=latest enablerepo=remi,remi-php72
+- name: install php-xml
+  yum: name=php-xml state=latest enablerepo=remi,remi-php72
+- name: install php-pecl-xdebug
+  yum: name=php-pecl-xdebug state=latest enablerepo=remi,remi-php72
+- name: install php-fpm
+  yum: name=php-fpm state=latest enablerepo=remi,remi-php72
+- name: install apcu
+  yum: name=php-pecl-apcu.x86_64 state=latest enablerepo=remi,remi-php72
+- name: install zendopcache
+  yum: name=php-pecl-zendopcache.x86_64 state=latest enablerepo=remi,remi-php72
+- name: get memcached for php7(unstable)
+  git: repo=git://github.com/php-memcached-dev/php-memcached.git depth=1 version=php7 dest=/home/vagrant/php-memcached
+- name: install memcached
+  yum: name=memcached state=latest
+- name: install libmemcached-devel
+  yum: name=libmemcached-devel state=latest
+- name: phpize memcached for php7(unstable)
+  command: chdir=/home/vagrant/php-memcached phpize
+- name: configure memcached for php7(unstable)
+  command: chdir=/home/vagrant/php-memcached ./configure
+- name: make memcached for php7(unstable)
+  command: chdir=/home/vagrant/php-memcached make
+- name: make install memcached for php7(unstable)
+  command: chdir=/home/vagrant/php-memcached make install
+  become: yes
+- name: install redis
+  yum: name=redis state=latest
+- name: install php-pecl-redis
+  yum: name=php-pecl-redis state=latest enablerepo=remi,remi-php72
+- name: php.ini settings
+  lineinfile: >-
+    dest=/etc/php.ini
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    state=present
+  with_items:
+    - { regexp: '^;date.timezone', line: 'date.timezone = Asia/Tokyo' }
+    - { regexp: '^display_errors.*', line: 'display_errors = On'}
+- name: xdebug settings
+  lineinfile: >-
+    dest=/etc/php.d/15-xdebug.ini
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    state=present
+  with_items:
+    - { regexp: '^;xdebug.remote_autostart = .*', line: 'xdebug.remote_autostart = 1' }
+    - { regexp: '^;xdebug.remote_enable = .*', line: 'xdebug.remote_enable = 1' }
+    - { regexp: '^;xdebug.remote_port = .*', line: 'xdebug.remote_port = 8000' }
+    - { regexp: '^;xdebug.remote_host = .*', line: 'xdebug.remote_host = {{ host_ip_address }}' }
+- name: add apcu section
+  ini_file: dest=/etc/php.ini section=APCu option={{ item.option }} value={{ item.value }}
+  with_items:
+    - option: apc.enable_cli
+      value: 1
+- name: add memcached section
+  ini_file: dest=/etc/php.ini section=memcached option={{ item.option }} value={{ item.value }}
+  with_items:
+    - option: extension
+      value: memcached.so
+- name: start memcached
+  service: name=memcached state=started
+- name: start redis
+  service: name=redis state=started
+- name: php-fpm settings
+  lineinfile: >-
+    dest=/etc/php-fpm.d/www.conf
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    state=present
+  with_items:
+    - { regexp: '^listen = .*', line: 'listen = /var/run/php-fpm/php-fpm.sock' }
+    - { regexp: '^;listen.owner = .*', line: 'listen.owner = nginx'}
+    - { regexp: '^;listen.group = .*', line: 'listen.group = nginx'}
+    - { regexp: '^;listen.mode = .*', line: 'listen.mode = 0666'}
+- name: run php-fpm
+  shell: /usr/bin/systemctl restart php-fpm
+  become: yes
+- name: install composer
+  shell: /usr/bin/curl -s https://getcomposer.org/installer | php && mv -f composer.phar /usr/bin/composer
+  become: yes
+- name: composer install for WebStream
+  composer: command=install working_dir=/workspace/webstream-framework/WebStream/test/Application

@@ -1,0 +1,8 @@
+---
+# mysql
+mysql_sqlfile: setup.mysql.sql
+mysql_userid: mysql
+mysql_passwd: Mysql@1234
+mysql_root_userid: root
+mysql_root_passwd: root
+db_name: sandbox

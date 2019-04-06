@@ -1,0 +1,59 @@
+# yum repository
+- name: set yum repository
+  yum: name=http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm state=present
+# postgres
+- name: install postgresql96-server
+  yum: name=postgresql96-server state=latest
+- name: install postgresql96-devel
+  yum: name=postgresql96-devel state=latest
+- name: install postgresql96-contrib
+  yum: name=postgresql96-contrib state=latest
+- name: install python-psycopg2
+  yum: name=python-psycopg2 state=latest
+# psql -h 192.168.0.150 -U postgres sandbox
+- name: remove database files
+  file: path={{ pg_data_home }} state=absent
+- name: create directory and change permission
+  file: path={{ pg_data_home }} mode=0700 owner=postgres group=postgres state=directory
+- name: copy files
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - src: "{{ postgresql_sqlfile }}"
+      dest: '/home/vagrant/setup/'
+- name: initialize database
+  shell: /usr/pgsql-9.6/bin/postgresql96-setup initdb
+  become: yes
+- name: postgresql.conf settings
+  lineinfile: >-
+    dest={{ pg_data_home }}/postgresql.conf
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    insertbefore=BOF
+    state=present
+  with_items:
+    - { regexp: '#listen_addresses.*', line: "listen_addresses = '*'" }
+    - { regexp: '#port.*', line: "port = 5432" }
+- name: pg_hba.conf settings
+  lineinfile: >-
+    dest={{ pg_data_home }}/pg_hba.conf
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    insertbefore=BOF
+    state=present
+  with_items:
+    - { regexp: 'host\s+all\s+all\s+127.0.0.1/32\s.+$', line: "host all all 127.0.0.1/32 md5\nhost all all 192.168.0.0/24 md5" }
+    - { regexp: 'local\s+all\s+all\s+peer\s+$', line: 'local all all trust' }
+- name: daemon reload
+  shell: /usr/bin/systemctl daemon-reload
+- name: force start postgres
+  shell: /usr/bin/systemctl restart postgresql-9.6
+  become: yes
+- name: create database
+  postgresql_db: name={{ db_name }} state=present
+  become_user: "{{ postgresql_userid }}"
+- name: create user
+  postgresql_user: db={{ db_name }} name={{ postgresql_userid }} password={{ postgresql_passwd }} priv=ALL state=present
+  become_user: "{{ postgresql_userid }}"
+- name: initialize table
+  command: /usr/bin/psql -d "{{ db_name }}" -U "{{ postgresql_userid }}" -f "/home/vagrant/setup/{{ postgresql_sqlfile }}"
+  become: yes

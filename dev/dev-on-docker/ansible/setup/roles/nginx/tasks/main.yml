@@ -1,0 +1,9 @@
+- name: copy repository config
+  copy: src=nginx.repo dest=/etc/yum.repos.d/
+- name: install nginx
+  yum: name=nginx state=latest enablerepo=nginx
+- name: overwrite nginx.conf
+  copy: src=nginx.conf dest=/etc/nginx/
+- name: restart nginx
+  shell: /usr/bin/systemctl restart nginx
+  become: yes

@@ -1,0 +1,15 @@
+- import_tasks: docker.yml
+- name: set docker repository
+  copy: src=docker-compose.yml dest=.
+- name: docker clean
+  shell: docker-compose stop && docker-compose rm -af
+  become: yes
+- name: docker prepare1
+  shell: docker-compose up --no-start {{ item }}
+  with_items:
+    - sqlite
+- name: docker prepare2
+  shell: docker-compose up -d {{ item }}
+  with_items:
+    - mysql
+    - postgres

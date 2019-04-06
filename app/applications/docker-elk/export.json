@@ -1,0 +1,55 @@
+[
+  {
+    "_id": "654f8810-8db8-11e8-a3b6-7b5c870be4ee",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Running",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"version\":\"6.3.1\",\"type\":\"visualization\",\"id\":\"51001960-8db8-11e8-a3b6-7b5c870be4ee\",\"embeddableConfig\":{}},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":15,\"w\":24,\"h\":15,\"i\":\"3\"},\"version\":\"6.3.1\",\"type\":\"visualization\",\"id\":\"36a7af80-8dbb-11e8-a3b6-7b5c870be4ee\",\"embeddableConfig\":{}}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "51001960-8db8-11e8-a3b6-7b5c870be4ee",
+    "_type": "visualization",
+    "_source": {
+      "title": "activity_per_month",
+      "visState": "{\"title\":\"activity_per_month\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Date\",\"interval\":\"M\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"02433d20-8db8-11e8-a3b6-7b5c870be4ee\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "36a7af80-8dbb-11e8-a3b6-7b5c870be4ee",
+    "_type": "visualization",
+    "_source": {
+      "title": "distance_of_this_month",
+      "visState": "{\"title\":\"distance_of_this_month\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"Distance\",\"customLabel\":\"Total distance of month\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_range\",\"schema\":\"group\",\"params\":{\"field\":\"Date\",\"ranges\":[{\"from\":\"now/M\",\"to\":\"now\"}],\"customLabel\":\"\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"02433d20-8db8-11e8-a3b6-7b5c870be4ee\",\"filter\":[{\"meta\":{\"index\":\"02433d20-8db8-11e8-a3b6-7b5c870be4ee\",\"type\":\"range\",\"key\":\"Date\",\"value\":\"July 1st 2018, 09:00:00.000 to July 22nd 2018, 23:21:54.908\",\"params\":{\"gte\":1530403200000,\"lt\":1532269314908,\"format\":\"epoch_millis\"},\"disabled\":false,\"negate\":false,\"alias\":null},\"range\":{\"Date\":{\"gte\":1530403200000,\"lt\":1532269314908,\"format\":\"epoch_millis\"}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"02433d20-8db8-11e8-a3b6-7b5c870be4ee\",\"type\":\"range\",\"key\":\"Date\",\"value\":\"July 1st 2018, 09:00:00.000 to July 22nd 2018, 23:23:13.461\",\"params\":{\"gte\":1530403200000,\"lt\":1532269393461,\"format\":\"epoch_millis\"},\"disabled\":false,\"negate\":false,\"alias\":null},\"range\":{\"Date\":{\"gte\":1530403200000,\"lt\":1532269393461,\"format\":\"epoch_millis\"}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  }
+]

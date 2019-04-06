@@ -1,0 +1,13 @@
+- name: download sqlite3
+  shell: >-
+    /usr/bin/wget {{ sqlite_download_url }}{{ sqlite_archive_name }}.zip &&
+    /usr/bin/unzip {{ sqlite_archive_name }}.zip
+- name: install sqlite3
+  shell: mv -f {{ sqlite_archive_name }}/sqlite3 /usr/bin/sqlite3
+  become: yes
+- name: copy sqlfile
+  copy: "src={{ sqlite_sqlfile }} dest=/tmp"
+- name: initialize table
+  shell: "/usr/bin/sqlite3 /tmp/{{ db_name }}.db < /tmp/{{ sqlite_sqlfile }}"
+- name: change permission
+  file: path=/tmp/{{ db_name }}.db mode=0777 owner=vagrant group=vagrant state=file

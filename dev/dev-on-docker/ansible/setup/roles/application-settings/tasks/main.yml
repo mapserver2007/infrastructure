@@ -1,0 +1,37 @@
+- name: create workspace directory
+  file: path="{{ item }}" mode=0777 owner=vagrant group=vagrant state=directory
+  with_items:
+    - /workspace/
+    - /workspace/sqlite/
+    - /workspace/webstream-framework/
+    - /workspace/webstream-framework/IO/
+    - /workspace/webstream-framework/Container/
+    - /workspace/webstream-framework/Log/
+    - /workspace/webstream-framework/Cache/
+    - /workspace/webstream-framework/DI/
+    - /workspace/webstream-framework/Annotation/
+    - /workspace/webstream-framework/Exception/
+    - /workspace/webstream-framework/ClassLoader/
+    - /workspace/webstream-framework/Database/
+    - /workspace/webstream-framework/WebStream/
+  become: yes
+- name: composer install for IO
+  composer: command=install working_dir=/workspace/webstream-framework/IO
+- name: composer install for Container
+  composer: command=install working_dir=/workspace/webstream-framework/Container
+- name: composer install for Log
+  composer: command=install working_dir=/workspace/webstream-framework/Log
+- name: composer install for Cache
+  composer: command=install working_dir=/workspace/webstream-framework/Cache
+- name: composer install for DI
+  composer: command=install working_dir=/workspace/webstream-framework/DI
+- name: composer install for Annotation
+  composer: command=install working_dir=/workspace/webstream-framework/Annotation
+- name: composer install for Exception
+  composer: command=install working_dir=/workspace/webstream-framework/Exception
+- name: composer install for ClassLoader
+  composer: command=install working_dir=/workspace/webstream-framework/ClassLoader
+- name: composer install for Database
+  composer: command=install working_dir=/workspace/webstream-framework/Database
+- name: composer install for WebStream
+  composer: command=install working_dir=/workspace/webstream-framework/WebStream/test/Application

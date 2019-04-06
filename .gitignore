@@ -14,3 +14,4 @@ app/applications/docker-elastic-lifelog/secrets/**/*.yml
 
 # dev
 dev/docker/syncfiles/docker-elastic-lifelog/secrets/**/*.yml
+dev/docker/syncfiles/backupfiles/jenkins/*.tar.gz

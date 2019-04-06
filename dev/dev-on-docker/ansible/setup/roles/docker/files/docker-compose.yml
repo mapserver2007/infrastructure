@@ -1,0 +1,37 @@
+version: '2'
+services:
+  mysql:
+    image: webstream/mysql
+    container_name: test-mysql
+    ports:
+      - 13306:3306
+    environment:
+      - MYSQL_DATABASE=sandbox
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_ROOT_PASSWORD=root
+  postgres:
+    image: webstream/postgres
+    container_name: test-postgres
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  sqlite:
+    image: webstream/sqlite
+    container_name: test-sqlite
+    volumes:
+      - /tmp
+  test_database:
+    image: webstream/php-cli
+    container_name: test-database
+    links:
+      - mysql:mysql
+      - postgres:postgres
+      - sqlite:sqlite
+    volumes_from:
+      - sqlite
+    volumes:
+      - /workspace/webstream-framework/Database:/workspace/
+    command: vendor/bin/phpunit

@@ -1,0 +1,45 @@
+# yum repository
+- name: set yum repository
+  yum: name=http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm state=present
+# mysql
+- name: install mysql-community-server
+  yum: name=mysql-community-server state=latest
+- name: install MySQL-python
+  yum: name=MySQL-python state=latest
+- name: copy files
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - src: 'my.cnf'
+      dest: '/etc/'
+    - src: "{{ mysql_sqlfile }}"
+      dest: '/home/vagrant/setup/'
+- name: copy file with option
+  copy: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
+- name: add permission /var/log
+  shell: /usr/bin/chmod 777 -R /var/log
+- name: force restart mysql
+  shell: /usr/bin/systemctl restart mysqld
+- name: get temporary root password
+  shell: cat /var/log/mysqld_error.log | grep 'password is generated' | awk '{print $11}'
+  register: mysql_default_password
+- name: change password validation to the easy way
+  shell: |
+    mysql -u root -p'{{ mysql_default_password.stdout }}' --connect-expired-password -e "SET GLOBAL validate_password_length=4;"
+    mysql -u root -p'{{ mysql_default_password.stdout }}' --connect-expired-password -e "SET GLOBAL validate_password_policy=LOW;"
+- name: change root user password
+  shell: mysql -u {{ mysql_root_userid }} -p'{{ mysql_default_password.stdout }}' --connect-expired-password -e "ALTER USER '{{ mysql_root_userid }}'@'localhost' IDENTIFIED BY '{{ mysql_root_userid }}';"
+- name: add timezone info
+  shell: /usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u {{ mysql_root_userid }} -p'{{ mysql_root_passwd }}' mysql
+- name: create timezone sql file
+  shell: /usr/bin/echo 'SET @@SESSION.time_zone = "Asia/Tokyo";' > /home/vagrant/setup/setup-timezone.sql
+- name: set JST timezone
+  shell: mysql -u {{ mysql_root_userid }} -p'{{ mysql_root_passwd }}' mysql < /home/vagrant/setup/setup-timezone.sql
+- name: create user
+  mysql_user: "name={{ mysql_userid }} password={{ mysql_passwd }} login_user={{ mysql_root_userid }} login_password={{ mysql_root_passwd }} host={{ item }} priv={{ db_name }}.*:ALL,GRANT state=present"
+  with_items:
+    - localhost
+    - 192.168.0.%
+- name: create database
+  mysql_db: "name={{ db_name }} login_user={{ mysql_root_userid }} login_password={{ mysql_root_passwd }} state=present"
+- name: initialize table
+  shell: mysql -u {{ mysql_root_userid }} -p'{{ mysql_root_passwd }}' {{ db_name }} < /home/vagrant/setup/{{ mysql_sqlfile }}

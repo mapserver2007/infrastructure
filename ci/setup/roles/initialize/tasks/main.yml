@@ -1,0 +1,5 @@
+- name: yum update
+  yum: name=* state=latest
+- name: change timezone
+  copy: src=/usr/share/zoneinfo/Japan dest=/etc/localtime
+  become: yes

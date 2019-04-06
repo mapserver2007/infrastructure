@@ -7,32 +7,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "dev-docker" do |node|
     node.vm.box = "bento/centos-7.4"
     node.vm.hostname = "dev-docker"
-    node.vm.network :public_network, ip: "192.168.0.162", bridge: "en1: Wi-Fi (AirPort)"
-    node.vm.network :forwarded_port, guest: 22, host: 2262, id: "ssh"
+    node.vm.network :public_network, ip: "192.168.1.190", bridge: "en1: Wi-Fi (AirPort)"
+    node.vm.network :forwarded_port, guest: 22, host: 2273, id: "ssh"
   end
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
   end
 
-  config.vm.synced_folder "setup", "/vagrant",
+  config.vm.synced_folder "C:\\Users\\tanak\\Dropbox\\workspace\\infrastructure\\dev\\docker\\setup", "/vagrant",
     type: "rsync",
     owner: "vagrant",
     group: "vagrant"
 
-  config.vm.synced_folder "~/Dropbox/workspace/infrastructure/dev/docker/syncfiles", "/workspace/",
+  config.vm.synced_folder "C:\\Users\\tanak\\Dropbox\\workspace\\infrastructure\\dev\\docker\\syncfiles", "/workspace/",
     type: "rsync",
     owner: "vagrant",
     group: "vagrant",
     rsync__exclude: [".git/", "sandbox/"]
 
-  # config.vm.synced_folder "~/Dropbox/workspace/infrastructure/dev/ansible-docker", "/workspace/dev",
-  #   type: "rsync",
-  #   owner: "vagrant",
-  #   group: "vagrant",
-  #   rsync__exclude: [".git/", "sandbox/"]
-
-  config.vm.synced_folder "~/Dropbox/workspace/infrastructure/dev/docker/syncfiles/backupfiles", "/workspace/backupfiles",
+  config.vm.synced_folder "C:\\Users\\tanak\\Dropbox\\workspace\\infrastructure\\dev\\docker\\syncfiles\\backupfiles", "/workspace/backupfiles",
     type: "virtualbox",
     owner: "vagrant",
     group: "vagrant"

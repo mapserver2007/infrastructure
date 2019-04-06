@@ -1,0 +1,16 @@
+- name: httpd.conf settings
+  tags: always
+  replace: >-
+    dest=/etc/httpd/conf/httpd.conf
+    regexp='{{ item.regexp }}'
+    replace='{{ item.replace }}'
+  with_items:
+  - regexp: 'AllowOverride None'
+    replace: 'AllowOverride All'
+  - regexp: 'DocumentRoot.+'
+    replace: 'DocumentRoot "/workspace"'
+  - regexp: '<Directory "/var/www/html">'
+    replace: '<Directory "/workspace">'
+- name: force start httpd
+  shell: systemctl start httpd.service
+  become: yes
